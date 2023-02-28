@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
         player = Player.instance;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         Move();
         ApplyPhysics();
