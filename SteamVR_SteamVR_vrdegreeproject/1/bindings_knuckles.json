@@ -22,7 +22,7 @@
       "skeleton": []
     }
   },
-  "controller_type": "oculus_touch",
+  "controller_type": "knuckles",
   "description": "",
-  "name": "oculus_touch"
+  "name": "knuckles_default"
 }

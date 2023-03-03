@@ -5,6 +5,8 @@ using Valve.VR.InteractionSystem;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] Transform head;
+
     [SerializeField] SteamVR_Action_Vector2 movementAction = SteamVR_Input.GetVector2Action("Movement");
     [SerializeField] float movementSpeed = 3;
 
@@ -13,39 +15,37 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float rotationSpeed = 180;
 
     CharacterController controller;
-    Player player;
 
     Vector3 gravity = Physics.gravity;
 
-    void Start()
+    void Awake()
     {
         controller = GetComponent<CharacterController>();
-        player = Player.instance;
     }
 
     void FixedUpdate()
     {
         Move();
-        ApplyPhysics();
+        ApplyGravity();
         Rotate();
     }
 
     private void Move()
     {
         Vector2 input = movementAction.axis;
-        Vector3 direction = player.hmdTransform.TransformDirection(new Vector3(input.x, 0, input.y));
+        Vector3 direction = head.TransformDirection(new Vector3(input.x, 0, input.y));
         Vector3 movement = direction * movementSpeed * Time.deltaTime;
         controller.Move(movement);
     }
 
-    private void ApplyPhysics()
+    private void ApplyGravity()
     {
         controller.Move(gravity * Time.deltaTime);
     }
 
     private void Rotate()
     {
-        Vector2 input = rotationAction.GetAxis(SteamVR_Input_Sources.RightHand);
+        Vector2 input = SteamVR_Input.GetVector2("Rotation", SteamVR_Input_Sources.Any, true);
         Vector3 rotation = new Vector3(0, input.x) * rotationSpeed * Time.deltaTime;
         transform.Rotate(rotation);
     }

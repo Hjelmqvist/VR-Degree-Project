@@ -3,9 +3,9 @@ using UnityEngine;
 /// <summary>
 /// Moves the player object and body child object so that colliders follows the IRL body
 /// </summary>
-public class MoveWithBody : MonoBehaviour
+public class MoveWithHead : MonoBehaviour
 {
-    [SerializeField] Transform realBody;
+    [SerializeField] Transform head;
     [SerializeField] CharacterController player;
     [SerializeField] Transform body;
 
@@ -13,7 +13,7 @@ public class MoveWithBody : MonoBehaviour
 
     void Update()
     {
-        Vector3 pos = realBody.localPosition;
+        Vector3 pos = head.localPosition;
         pos.y = 0;
         Vector3 change = pos - lastPos;
 

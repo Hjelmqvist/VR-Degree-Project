@@ -1,18 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+[RequireComponent(typeof(Rigidbody))]
+public class Interactable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    Rigidbody rb;
+
+    private void Awake()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void HoverStart()
     {
-        
+        Debug.Log("Start hovering");
+    }
+
+    public virtual void HoverEnd()
+    {
+        Debug.Log("Stop hovering");
+    }
+
+    public virtual void Pickup()
+    {
+        Debug.Log("Pickup");
+        rb.isKinematic = true;
+    }
+
+    public virtual void Drop()
+    {
+        Debug.Log("Drop");
+        rb.isKinematic = false;
+    }
+
+    public virtual void Interact()
+    {
+
     }
 }
