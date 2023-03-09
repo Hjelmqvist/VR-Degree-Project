@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -14,10 +15,10 @@ MonoBehaviour:
   leftHand:
     inputSource: 1
     thumbFingerMovementType: 0
-    indexFingerMovementType: 2
-    middleFingerMovementType: 2
-    ringFingerMovementType: 2
-    pinkyFingerMovementType: 2
+    indexFingerMovementType: 0
+    middleFingerMovementType: 0
+    ringFingerMovementType: 0
+    pinkyFingerMovementType: 0
     ignoreRootPoseData: 1
     ignoreWristPoseData: 1
     position: {x: 0.04388981, y: -0.009897895, z: -0.07962455}
@@ -89,10 +90,10 @@ MonoBehaviour:
   rightHand:
     inputSource: 2
     thumbFingerMovementType: 0
-    indexFingerMovementType: 2
-    middleFingerMovementType: 2
-    ringFingerMovementType: 2
-    pinkyFingerMovementType: 2
+    indexFingerMovementType: 0
+    middleFingerMovementType: 0
+    ringFingerMovementType: 0
+    pinkyFingerMovementType: 0
     ignoreRootPoseData: 1
     ignoreWristPoseData: 1
     position: {x: -0.04388981, y: -0.009897895, z: -0.07962455}
@@ -161,3 +162,4 @@ MonoBehaviour:
     - {x: 0.6780625, y: -0.6592852, z: -0.26568344, w: -0.18704711}
     - {x: 0.7367927, y: -0.6347571, z: -0.14393571, w: -0.18303718}
     - {x: 0.7584072, y: -0.6393418, z: -0.12667806, w: -0.0036594148}
+  applyToSkeletonRoot: 1

@@ -42,7 +42,7 @@ namespace Valve.VR.InteractionSystem
             Vector3 localPosition = handCollider.transform.localPosition;
             Quaternion localRotation = handCollider.transform.localRotation;
 
-            handCollider.transform.parent = Player.instance.transform;
+            handCollider.transform.parent = transform.root; // Player.instance.transform;
             handCollider.transform.localPosition = localPosition;
             handCollider.transform.localRotation = localRotation;
             handCollider.hand = this;

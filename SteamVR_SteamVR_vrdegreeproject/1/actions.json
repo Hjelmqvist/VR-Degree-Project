@@ -49,21 +49,17 @@
       "type": "boolean"
     },
     {
-      "name": "/actions/default/out/Haptic",
-      "type": "vibration"
+      "name": "/actions/default/in/Interact",
+      "type": "boolean"
     },
     {
-      "name": "/actions/debug/in/ToggleControllers",
-      "type": "boolean"
+      "name": "/actions/default/out/Haptic",
+      "type": "vibration"
     }
   ],
   "action_sets": [
     {
       "name": "/actions/default",
-      "usage": "leftright"
-    },
-    {
-      "name": "/actions/debug",
       "usage": "leftright"
     }
   ],
@@ -124,7 +120,6 @@
   "localization": [
     {
       "language_tag": "en_US",
-      "/actions/debug/in/ToggleControllers": "Toggle Controllers",
       "/actions/default/in/Toggle Controllers": "Toggle Controllers",
       "/actions/default/in/Movement": "Movement",
       "/actions/default/in/Rotation": "Rotation",
@@ -135,7 +130,8 @@
       "/actions/default/in/SkeletonRightHand": "Skeleton Right Hand",
       "/actions/default/in/Squeeze": "Squeeze",
       "/actions/default/in/HeadsetOnHead": "Headset On Head",
-      "/actions/default/in/InteractUI": "Interact UI"
+      "/actions/default/in/InteractUI": "Interact UI",
+      "/actions/default/in/Interact": "Interact"
     }
   ]
 }

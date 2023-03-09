@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
 using Valve.VR.InteractionSystem;
@@ -7,14 +5,9 @@ using Valve.VR.InteractionSystem;
 public class ToggleControllers : MonoBehaviour
 {
     [SerializeField] SteamVR_Action_Boolean toggleControllersAction = SteamVR_Input.GetBooleanAction("ToggleControllers");
-    Player player;
+    [SerializeField] RenderModel[] hands;
 
     bool controllersOn = false;
-
-    private void Start()
-    {
-        player = Player.instance;
-    }
 
     private void Update()
     {
@@ -23,18 +16,18 @@ public class ToggleControllers : MonoBehaviour
             controllersOn = !controllersOn;
             if (controllersOn)
             {
-                foreach (Hand hand in player.hands)
+                foreach (var hand in hands)
                 {
-                    hand.ShowController();
-                    hand.SetSkeletonRangeOfMotion(EVRSkeletalMotionRange.WithController);
+                    hand.SetControllerVisibility(true);
+                    hand.SetSkeletonRangeOfMotion(EVRSkeletalMotionRange.WithController, 0.1f);
                 }
             }
             else
             {
-                foreach (Hand hand in player.hands)
+                foreach (var hand in hands)
                 {
-                    hand.HideController();
-                    hand.SetSkeletonRangeOfMotion(EVRSkeletalMotionRange.WithoutController);
+                    hand.SetControllerVisibility(false);
+                    hand.SetSkeletonRangeOfMotion(EVRSkeletalMotionRange.WithoutController, 0.1f);
                 }
             }
         }
