@@ -9,8 +9,7 @@ namespace Hjelmqvist.VR
     {
         [SerializeField] Material hoverMaterial;
         [SerializeField] float timeToReachHand = 0.1f;
-        [SerializeField] float travelSpeed = 5;
-        [SerializeField] float holdSpeed = 1;
+        [SerializeField] float travelSpeed = 0.2f;
         [SerializeField] float holdMagnitudeThreshold = 0.1f;
          
         [Space(10)]
@@ -18,7 +17,7 @@ namespace Hjelmqvist.VR
         [SerializeField] float poseBlendTime = 0.1f;
         [SerializeField] float skeletonBlendTime = 0f;
 
-        GameObject[] highlights;
+        MeshRenderer[] meshRenderers;
         bool isHighlighting = false;
 
         List<Hand> hoveringHands = new List<Hand>();
@@ -31,50 +30,41 @@ namespace Hjelmqvist.VR
 
         protected virtual void Awake()
         {
+            meshRenderers = GetComponentsInChildren<MeshRenderer>();
             rb = GetComponent<Rigidbody>();
             skeletonPoser = GetComponent<SteamVR_Skeleton_Poser>();
-            CreateHighlight();
-        }
-
-        private void CreateHighlight()
-        {
-            MeshFilter[] highlightObjects = GetComponentsInChildren<MeshFilter>();
-            highlights = new GameObject[highlightObjects.Length];
-
-            for (int i = 0; i < highlightObjects.Length; i++)
-            {
-                GameObject highlight = new GameObject("Highlight");
-                highlight.SetActive(false);
-                highlight.transform.SetParent(highlightObjects[i].transform);
-                highlight.transform.localPosition = Vector3.zero;
-                highlight.transform.localRotation = Quaternion.identity;
-                highlight.transform.localScale = Vector3.one;
-                highlights[i] = highlight;
-
-                MeshFilter highlightMesh = highlight.AddComponent<MeshFilter>();
-                highlightMesh.sharedMesh = highlightObjects[i].sharedMesh;
-                MeshRenderer highlightRenderer = highlight.AddComponent<MeshRenderer>();
-                highlightRenderer.material = hoverMaterial;
-            }
         }
 
         private void UpdateHighlight()
         {
-            if (hoveringHands.Count == 0)
+            if (hoveringHands.Count == 0) // Remove highlight
             {
+                for (int i = 0; i < meshRenderers.Length; i++)
+                {
+                    Material[] currentMaterials = meshRenderers[i].materials;
+                    Material[] materials = new Material[currentMaterials.Length - 1];
+                    for (int j = 0; j < materials.Length; j++)
+                    {
+                        materials[j] = currentMaterials[j];
+                    }
+                    meshRenderers[i].materials = materials;
+                }
                 isHighlighting = false;
-                for (int i = 0; i < highlights.Length; i++)
-                {
-                    highlights[i].SetActive(false);
-                }
             }
-            else if (!isHighlighting)
+            else if (!isHighlighting) // Add highlight
             {
-                isHighlighting = true;
-                for (int i = 0; i < highlights.Length; i++)
+                for (int i = 0; i < meshRenderers.Length; i++)
                 {
-                    highlights[i].SetActive(true);
+                    Material[] currentMaterials = meshRenderers[i].materials;
+                    Material[] materials = new Material[currentMaterials.Length + 1];
+                    for (int j = 0; j < currentMaterials.Length; j++)
+                    {
+                        materials[j] = currentMaterials[j];
+                    }
+                    materials[materials.Length - 1] = hoverMaterial;
+                    meshRenderers[i].materials = materials;
                 }
+                isHighlighting = true;
             }
         }
 
@@ -107,22 +97,21 @@ namespace Hjelmqvist.VR
             Vector3 distance = targetPosition - transform.position;
             Vector3 targetVelocity = distance / Time.fixedDeltaTime;
 
-            if (distance.magnitude < holdMagnitudeThreshold)
+            if (distance.magnitude > holdMagnitudeThreshold)
             {
-                targetVelocity /= holdSpeed;
-            }
-            else
-            {
-                targetVelocity /= travelSpeed;
+                targetVelocity *= travelSpeed;
             }
 
             rb.velocity = Vector3.MoveTowards(rb.velocity, targetVelocity, MaxVelocityChange);
 
-            if (GetUpdatedAttachedVelocities(out Vector3 velocityTarget, out Vector3 angularTarget))
-            {
-                //rb.velocity = Vector3.MoveTowards(rb.velocity, velocityTarget, MaxVelocityChange);
-                rb.angularVelocity = Vector3.MoveTowards(rb.angularVelocity, angularTarget, MaxAngularVelocityChange);
-            }
+            Quaternion targetRotation = Quaternion.RotateTowards(rb.rotation, TargetItemRotation(), MaxAngularVelocityChange);
+
+            //if (GetUpdatedAttachedVelocities(out Vector3 velocityTarget, out Vector3 angularTarget))
+            //{
+            //    //rb.velocity = Vector3.MoveTowards(rb.velocity, velocityTarget, MaxVelocityChange);
+            //    rb.angularVelocity = Vector3.MoveTowards(rb.angularVelocity, angularTarget, MaxAngularVelocityChange);
+                
+            //}
         }
 
         public virtual void Drop(Hand hand)
