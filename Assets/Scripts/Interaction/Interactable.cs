@@ -7,12 +7,10 @@ namespace Hjelmqvist.VR
     [RequireComponent(typeof(Rigidbody), typeof(SteamVR_Skeleton_Poser))]
     public class Interactable : MonoBehaviour
     {
-        [SerializeField] Material hoverMaterial;
-        [SerializeField] float timeToReachHand = 0.1f;
-        [SerializeField] float travelSpeed = 0.2f;
-        [SerializeField] float holdMagnitudeThreshold = 0.1f;
-         
-        [Space(10)]
+        [Header("Highlight")]
+        [SerializeField] Material hoverMaterial;  
+
+        [Header("Posing"), Space(10)]
         [SerializeField] bool usePoser = true;
         [SerializeField] float poseBlendTime = 0.1f;
         [SerializeField] float skeletonBlendTime = 0f;
@@ -26,7 +24,11 @@ namespace Hjelmqvist.VR
         Rigidbody rb;
         SteamVR_Skeleton_Poser skeletonPoser;
 
-        public bool IsHeld => holdingHand != null;
+        const float MaxVelocityChange = 20f;
+        const float MaxAngularVelocityChange = 10f;
+        const float AngularVelocitySpeed = 50f;
+
+        public bool CanBeGrabbed => holdingHand == null;
 
         protected virtual void Awake()
         {
@@ -91,106 +93,64 @@ namespace Hjelmqvist.VR
             holdingHand = hand;
         }
 
-        public virtual void HeldFixedUpdate()
-        {
-            Vector3 targetPosition = TargetItemPosition();
-            Vector3 distance = targetPosition - transform.position;
-            Vector3 targetVelocity = distance / Time.fixedDeltaTime;
-
-            if (distance.magnitude > holdMagnitudeThreshold)
-            {
-                targetVelocity *= travelSpeed;
-            }
-
-            rb.velocity = Vector3.MoveTowards(rb.velocity, targetVelocity, MaxVelocityChange);
-
-            Quaternion targetRotation = Quaternion.RotateTowards(rb.rotation, TargetItemRotation(), MaxAngularVelocityChange);
-
-            //if (GetUpdatedAttachedVelocities(out Vector3 velocityTarget, out Vector3 angularTarget))
-            //{
-            //    //rb.velocity = Vector3.MoveTowards(rb.velocity, velocityTarget, MaxVelocityChange);
-            //    rb.angularVelocity = Vector3.MoveTowards(rb.angularVelocity, angularTarget, MaxAngularVelocityChange);
-                
-            //}
-        }
-
         public virtual void Drop(Hand hand)
         {
             if (usePoser)
             {
                 hand.Skeleton.BlendToSkeleton(skeletonBlendTime);
             }
-            
+
             rb.useGravity = true;
             holdingHand = null;
+        }
+
+        public virtual void HeldFixedUpdate(float speed)
+        {
+            SteamVR_Behaviour_Skeleton skeleton = holdingHand.Skeleton;
+            Vector3 targetPosition;
+            Quaternion targetRotation;
+
+            if (usePoser)
+            {
+                targetPosition = holdingHand.transform.TransformPoint(skeletonPoser.GetBlendedPose(skeleton).position);
+                targetRotation = holdingHand.transform.rotation * skeletonPoser.GetBlendedPose(skeleton).rotation;
+            }
+            else
+            {
+                targetPosition = holdingHand.transform.position;
+                targetRotation = holdingHand.transform.rotation;
+            }
+
+            SetVelocity(targetPosition, speed);
+            SetAngularVelocity(targetRotation, speed);
+        }
+
+        private void SetVelocity(Vector3 targetPosition, float speed)
+        {
+            Vector3 distance = targetPosition - transform.position;
+            Vector3 targetVelocity = distance / Time.fixedDeltaTime;
+            Vector3 velocity = targetVelocity * speed;
+            rb.velocity = Vector3.MoveTowards(rb.velocity, velocity, MaxVelocityChange);
+        }
+
+        private void SetAngularVelocity(Quaternion targetRotation, float speed)
+        {
+            Quaternion rotationDifference = targetRotation * Quaternion.Inverse(transform.rotation);
+            rotationDifference.ToAngleAxis(out float angle, out Vector3 axis);
+
+            if (angle > 180)
+                angle -= 360;
+
+            if (angle != 0 && !float.IsNaN(axis.x) && !float.IsInfinity(axis.x))
+            {
+                Vector3 angularTarget = angle * axis * speed * AngularVelocitySpeed * Time.fixedDeltaTime;
+                rb.angularVelocity = Vector3.MoveTowards(rb.angularVelocity, angularTarget, MaxAngularVelocityChange);
+            }    
         }
 
         public virtual void Interact()
         {
 
-        }
-
-
-        // FROM STEAMVR HAND
-
-        protected const float MaxVelocityChange = 20f;
-        protected const float VelocityMagic = 10000f;
-        protected const float MaxAngularVelocityChange = 10f;
-        protected const float AngularVelocityMagic = 50f;
-
-        public Vector3 TargetItemPosition()
-        {
-            if (!usePoser)
-                return holdingHand.transform.position;
-            Vector3 tp = holdingHand.transform.InverseTransformPoint(holdingHand.transform.TransformPoint(skeletonPoser.GetBlendedPose(holdingHand.Skeleton).position));
-            return holdingHand.transform.TransformPoint(tp);
-        }
-
-        protected Quaternion TargetItemRotation()
-        {
-            if (!usePoser)
-                return holdingHand.transform.rotation;
-            Quaternion tr = Quaternion.Inverse(holdingHand.transform.rotation) * (holdingHand.transform.rotation * skeletonPoser.GetBlendedPose(holdingHand.Skeleton).rotation);
-            return holdingHand.transform.rotation * tr;
-        }
-
-        protected bool GetUpdatedAttachedVelocities(out Vector3 velocityTarget, out Vector3 angularTarget)
-        {
-            bool realNumbers = false;
-
-            float velocityMagic = VelocityMagic;
-            float angularVelocityMagic = AngularVelocityMagic;
-
-            Vector3 targetItemPosition = TargetItemPosition();
-            Vector3 positionDelta = (targetItemPosition - rb.position);
-            velocityTarget = (positionDelta * velocityMagic * Time.deltaTime);
-
-            if (float.IsNaN(velocityTarget.x) == false && float.IsInfinity(velocityTarget.x) == false)
-            {
-                realNumbers = true;
-            }
-            else
-                velocityTarget = Vector3.zero;
-
-            Quaternion targetItemRotation = TargetItemRotation();
-            Quaternion rotationDelta = targetItemRotation * Quaternion.Inverse(transform.rotation);
-
-            float angle;
-            Vector3 axis;
-            rotationDelta.ToAngleAxis(out angle, out axis);
-
-            if (angle > 180)
-                angle -= 360;
-
-            if (angle != 0 && float.IsNaN(axis.x) == false && float.IsInfinity(axis.x) == false)
-            {
-                angularTarget = angle * axis * angularVelocityMagic * Time.deltaTime;
-                realNumbers &= true;
-            }
-            else
-                angularTarget = Vector3.zero;
-
-            return realNumbers;
         }
     }
 }
