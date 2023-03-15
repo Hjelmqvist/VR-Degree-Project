@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 2085643027759982146}
   - component: {fileID: 2064111161957848186}
   - component: {fileID: 2064111161957848190}
-  - component: {fileID: 2064111161957848180}
   - component: {fileID: 2064111161957848187}
+  - component: {fileID: 832649864656162039}
   m_Layer: 7
   m_Name: Key
   m_TagString: Untagged
@@ -117,25 +117,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: e1561fc62d8f8bb45b35426ab913d57a, type: 3}
---- !u!114 &2064111161957848180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2063749628475611344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5b7fe6380b1df84786a7e39f60b70ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverMaterial: {fileID: 2100000, guid: 7b939e5e799d98a469f594828ebab52e, type: 2}
-  timeToReachHand: 0.1
-  travelSpeed: 0.2
-  holdMagnitudeThreshold: 0.1
-  usePoser: 1
-  poseBlendTime: 0.1
-  skeletonBlendTime: 0
 --- !u!114 &2064111161957848187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,12 +132,12 @@ MonoBehaviour:
   poseEditorExpanded: 1
   blendEditorExpanded: 0
   poseNames:
-  - CubePose (MAIN)
+  - KeyPose (MAIN)
   overridePreviewLeftHandPrefab: {fileID: 1000011547835092, guid: 8ade79fed86bbd141926d1cd94c98457,
     type: 3}
   overridePreviewRightHandPrefab: {fileID: 1000012617731570, guid: d07386f0ec952ec409dc7753bcf5746b,
     type: 3}
-  skeletonMainPose: {fileID: 11400000, guid: 7698ce6c9a8924f4c810d69991a6789c, type: 2}
+  skeletonMainPose: {fileID: 11400000, guid: 766ebc00117314a408de12bab8209e66, type: 2}
   skeletonAdditionalPoses: []
   showLeftPreview: 0
   showRightPreview: 0
@@ -165,3 +146,21 @@ MonoBehaviour:
   previewPoseSelection: 0
   blendingBehaviours: []
   scale: 1
+--- !u!114 &832649864656162039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2063749628475611344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b09caca636427e43a02a79d97efb506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverMaterial: {fileID: 2100000, guid: 7b939e5e799d98a469f594828ebab52e, type: 2}
+  usePoser: 1
+  poseBlendTime: 0.1
+  skeletonBlendTime: 0
+  moveType: 1
+  lerpTime: 0.2

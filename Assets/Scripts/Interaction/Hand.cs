@@ -10,8 +10,7 @@ namespace Hjelmqvist.VR
         [SerializeField] SteamVR_Action_Single squeezeAction = SteamVR_Input.GetAction<SteamVR_Action_Single>("Squeeze");
         [SerializeField] SteamVR_Action_Boolean interactAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("Interact");
 
-        [Space(10)]
-        [Header("Pickup/Hover")]
+        [Header("Finding Interactable"), Space(10)]
         [SerializeField] Transform overlapPosition;
         [SerializeField] float overlapRadius;
         [SerializeField] LayerMask overlapLayers;
@@ -26,9 +25,9 @@ namespace Hjelmqvist.VR
         Interactable heldInteractable = null;
         bool isHolding = false;
 
-        [Space(10)]
+        [Header("Grabbing"), Space(10)]
         [SerializeField] float timeToReachHand = 0.1f;
-        [SerializeField] AnimationCurve travelSpeed;
+        [SerializeField] AnimationCurve grabSpeed;
 
         float holdStartTime;
         float holdTargetTime;
@@ -71,8 +70,8 @@ namespace Hjelmqvist.VR
         {
             if (isHolding)
             {
-                float speed = travelSpeed.Evaluate(Mathf.InverseLerp(holdStartTime, holdTargetTime, Time.time));
-                heldInteractable.HeldFixedUpdate(speed);
+                float step = grabSpeed.Evaluate(Mathf.InverseLerp(holdStartTime, holdTargetTime, Time.time));
+                heldInteractable.HeldFixedUpdate(step);
             }
         }
 
@@ -83,13 +82,13 @@ namespace Hjelmqvist.VR
                 if (squeezeAction.GetAxis(handType) > grabStrengthThreshold)
                 {
                     PickupInteractable(interactable);
-                    //StopHover();
                 }
             }
         }
 
-        private void PickupInteractable(Interactable interactable)
+        public void PickupInteractable(Interactable interactable)
         {
+            StopHover();
             interactable.Pickup(this);
             heldInteractable = interactable;
             isHolding = true;
@@ -97,11 +96,14 @@ namespace Hjelmqvist.VR
             holdTargetTime = holdStartTime + timeToReachHand;
         }
 
-        private void DropInteractable()
+        public void DropInteractable()
         {
-            heldInteractable.Drop(this);
-            heldInteractable = null;
-            isHolding = false;
+            if (heldInteractable)
+            {
+                heldInteractable.Drop(this);
+                heldInteractable = null;
+                isHolding = false;
+            }
         }
 
         /// <summary>

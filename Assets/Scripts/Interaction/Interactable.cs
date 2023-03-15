@@ -1,39 +1,38 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Valve.VR;
 
 namespace Hjelmqvist.VR
 {
-    [RequireComponent(typeof(Rigidbody), typeof(SteamVR_Skeleton_Poser))]
+    [RequireComponent(typeof(Rigidbody))]
     public class Interactable : MonoBehaviour
     {
         [Header("Highlight")]
-        [SerializeField] Material hoverMaterial;  
+        [SerializeField] Material hoverMaterial;
+        List<Hand> hoveringHands = new List<Hand>();
+        protected Hand holdingHand;
 
-        [Header("Posing"), Space(10)]
+        [Header("Posing")]
         [SerializeField] bool usePoser = true;
         [SerializeField] float poseBlendTime = 0.1f;
         [SerializeField] float skeletonBlendTime = 0f;
 
+        protected Rigidbody rb;
+        SteamVR_Skeleton_Poser skeletonPoser;
         MeshRenderer[] meshRenderers;
         bool isHighlighting = false;
-
-        List<Hand> hoveringHands = new List<Hand>();
-        Hand holdingHand;
-
-        Rigidbody rb;
-        SteamVR_Skeleton_Poser skeletonPoser;
 
         const float MaxVelocityChange = 20f;
         const float MaxAngularVelocityChange = 10f;
         const float AngularVelocitySpeed = 50f;
 
-        public bool CanBeGrabbed => holdingHand == null;
+        public virtual bool CanBeGrabbed => holdingHand == null;
 
         protected virtual void Awake()
         {
-            meshRenderers = GetComponentsInChildren<MeshRenderer>();
             rb = GetComponent<Rigidbody>();
+            meshRenderers = GetComponentsInChildren<MeshRenderer>();
             skeletonPoser = GetComponent<SteamVR_Skeleton_Poser>();
         }
 
@@ -43,13 +42,13 @@ namespace Hjelmqvist.VR
             {
                 for (int i = 0; i < meshRenderers.Length; i++)
                 {
-                    Material[] currentMaterials = meshRenderers[i].materials;
-                    Material[] materials = new Material[currentMaterials.Length - 1];
-                    for (int j = 0; j < materials.Length; j++)
+                    Material[] current = meshRenderers[i].materials;
+                    Material[] updated = new Material[current.Length - 1];
+                    for (int j = 0; j < updated.Length; j++)
                     {
-                        materials[j] = currentMaterials[j];
+                        updated[j] = current[j];
                     }
-                    meshRenderers[i].materials = materials;
+                    meshRenderers[i].materials = updated;
                 }
                 isHighlighting = false;
             }
@@ -57,14 +56,14 @@ namespace Hjelmqvist.VR
             {
                 for (int i = 0; i < meshRenderers.Length; i++)
                 {
-                    Material[] currentMaterials = meshRenderers[i].materials;
-                    Material[] materials = new Material[currentMaterials.Length + 1];
-                    for (int j = 0; j < currentMaterials.Length; j++)
+                    Material[] current = meshRenderers[i].materials;
+                    Material[] updated = new Material[current.Length + 1];
+                    for (int j = 0; j < current.Length; j++)
                     {
-                        materials[j] = currentMaterials[j];
+                        updated[j] = current[j];
                     }
-                    materials[materials.Length - 1] = hoverMaterial;
-                    meshRenderers[i].materials = materials;
+                    updated[updated.Length - 1] = hoverMaterial;
+                    meshRenderers[i].materials = updated;
                 }
                 isHighlighting = true;
             }
@@ -88,8 +87,8 @@ namespace Hjelmqvist.VR
             {
                 hand.Skeleton.BlendToPoser(skeletonPoser, poseBlendTime);
             }
-
             rb.useGravity = false;
+            rb.isKinematic = false;
             holdingHand = hand;
         }
 
@@ -99,12 +98,12 @@ namespace Hjelmqvist.VR
             {
                 hand.Skeleton.BlendToSkeleton(skeletonBlendTime);
             }
-
             rb.useGravity = true;
+            
             holdingHand = null;
         }
 
-        public virtual void HeldFixedUpdate(float speed)
+        public virtual void HeldFixedUpdate(float step)
         {
             SteamVR_Behaviour_Skeleton skeleton = holdingHand.Skeleton;
             Vector3 targetPosition;
@@ -121,19 +120,19 @@ namespace Hjelmqvist.VR
                 targetRotation = holdingHand.transform.rotation;
             }
 
-            SetVelocity(targetPosition, speed);
-            SetAngularVelocity(targetRotation, speed);
+            SetVelocity(targetPosition, step);
+            SetAngularVelocity(targetRotation, step);
         }
 
-        private void SetVelocity(Vector3 targetPosition, float speed)
+        private void SetVelocity(Vector3 targetPosition, float step)
         {
             Vector3 distance = targetPosition - transform.position;
             Vector3 targetVelocity = distance / Time.fixedDeltaTime;
-            Vector3 velocity = targetVelocity * speed;
+            Vector3 velocity = targetVelocity * step;
             rb.velocity = Vector3.MoveTowards(rb.velocity, velocity, MaxVelocityChange);
         }
 
-        private void SetAngularVelocity(Quaternion targetRotation, float speed)
+        private void SetAngularVelocity(Quaternion targetRotation, float step)
         {
             Quaternion rotationDifference = targetRotation * Quaternion.Inverse(transform.rotation);
             rotationDifference.ToAngleAxis(out float angle, out Vector3 axis);
@@ -143,7 +142,7 @@ namespace Hjelmqvist.VR
 
             if (angle != 0 && !float.IsNaN(axis.x) && !float.IsInfinity(axis.x))
             {
-                Vector3 angularTarget = angle * axis * speed * AngularVelocitySpeed * Time.fixedDeltaTime;
+                Vector3 angularTarget = angle * axis * step * AngularVelocitySpeed * Time.fixedDeltaTime;
                 rb.angularVelocity = Vector3.MoveTowards(rb.angularVelocity, angularTarget, MaxAngularVelocityChange);
             }    
         }

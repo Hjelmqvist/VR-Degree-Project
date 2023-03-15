@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     private void Rotate()
     {
-        Vector2 input = SteamVR_Input.GetVector2("Rotation", SteamVR_Input_Sources.Any, true);
+        Vector2 input = rotationAction.axis;
         Vector3 rotation = new Vector3(0, input.x) * rotationSpeed * Time.deltaTime;
         transform.Rotate(rotation);
     }
