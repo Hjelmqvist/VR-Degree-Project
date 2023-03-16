@@ -8,7 +8,9 @@ public class Key : Interactable
     [SerializeField] KeyMoveType moveType = KeyMoveType.Snap;
     [SerializeField] float lerpTime = 0.2f;
     [SerializeField] bool setParentOnSuccess = true;
+    [SerializeField] bool canBeTakenFromCorrectLock = false;
 
+    bool isInLock = false;
     bool inCorrectLock = false;
 
     public enum KeyMoveType
@@ -18,10 +20,11 @@ public class Key : Interactable
         Lerp
     }
 
-    public override bool CanBeGrabbed => base.CanBeGrabbed && !inCorrectLock;
+    public override bool CanBeGrabbed => base.CanBeGrabbed && (!isInLock  || (canBeTakenFromCorrectLock || !inCorrectLock));
 
     public void PlaceInLock(Lock lockObject, bool correctKey)
     {
+        isInLock = true;
         inCorrectLock = correctKey;
 
         if (correctKey)
@@ -29,7 +32,7 @@ public class Key : Interactable
             transform.SetParent(lockObject.transform);
         }
 
-        if (holdingHand)
+        if (holdingHand && moveType != KeyMoveType.None)
         {
             holdingHand.DropInteractable();
         }
@@ -41,6 +44,7 @@ public class Key : Interactable
     {
         base.Pickup(hand);
         transform.SetParent(null);
+        isInLock = false;
     }
 
     private void MoveToLock(Lock lockObject, bool correctKey)

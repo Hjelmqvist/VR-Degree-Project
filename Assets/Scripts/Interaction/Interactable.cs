@@ -23,6 +23,9 @@ namespace Hjelmqvist.VR
         MeshRenderer[] meshRenderers;
         bool isHighlighting = false;
 
+        public UnityEvent OnPickup;
+        public UnityEvent OnDrop;
+
         const float MaxVelocityChange = 20f;
         const float MaxAngularVelocityChange = 10f;
         const float AngularVelocitySpeed = 50f;
@@ -90,6 +93,7 @@ namespace Hjelmqvist.VR
             rb.useGravity = false;
             rb.isKinematic = false;
             holdingHand = hand;
+            OnPickup.Invoke();
         }
 
         public virtual void Drop(Hand hand)
@@ -99,8 +103,8 @@ namespace Hjelmqvist.VR
                 hand.Skeleton.BlendToSkeleton(skeletonBlendTime);
             }
             rb.useGravity = true;
-            
             holdingHand = null;
+            OnDrop.Invoke();
         }
 
         public virtual void HeldFixedUpdate(float step)
