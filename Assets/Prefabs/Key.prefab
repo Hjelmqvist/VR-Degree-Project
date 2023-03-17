@@ -162,5 +162,13 @@ MonoBehaviour:
   usePoser: 1
   poseBlendTime: 0.1
   skeletonBlendTime: 0
-  moveType: 1
-  lerpTime: 0.2
+  OnPickup:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDrop:
+    m_PersistentCalls:
+      m_Calls: []
+  moveType: 2
+  lerpTime: 1
+  setParentOnSuccess: 1
+  canBeTakenFromCorrectLock: 0

@@ -45,6 +45,7 @@ public class Key : Interactable
         base.Pickup(hand);
         transform.SetParent(null);
         isInLock = false;
+        StopAllCoroutines();
     }
 
     private void MoveToLock(Lock lockObject, bool correctKey)

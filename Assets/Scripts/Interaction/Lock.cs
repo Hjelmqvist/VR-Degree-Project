@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,77 +6,63 @@ public class Lock : MonoBehaviour
     [SerializeField] Key key;
     [SerializeField] float delay = 0f;
     [SerializeField] float distanceThreshold = 0.1f;
-    [SerializeField] float searchDelayAfterPickup = 0.2f;
+    [SerializeField] float interactDelay = 2f;
+    [SerializeField] bool relockable = false;
     [SerializeField] UnityEvent OnLocked;
     [SerializeField] UnityEvent OnUnlocked;
+
+    float lastInteractTime = float.MinValue;
     Key placedKey;
 
-    bool isSearching = true;
+    bool IsSearching => placedKey == null && Time.time >= lastInteractTime + interactDelay;
+    bool CanExit => placedKey != null && Time.time >= lastInteractTime + interactDelay;
 
-    private void Update()
+    private void OnTriggerStay(Collider other)
     {
-        if (isSearching)
+        if (IsSearching && other.TryGetComponent(out Key key))
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, distanceThreshold);
-            for (int i = 0; i < colliders.Length; i++)
-            {
-                if (colliders[i].TryGetComponent(out Key key))
-                {
-                    EnterKey(key);
-                    break;
-                }
-            }
-        }
-        else if (Vector3.Distance(transform.position, placedKey.transform.position) > distanceThreshold * 2)
-        {
-            isSearching = true;
-            placedKey = null;
+            lastInteractTime = Time.time;
+            placedKey = key;
+            bool correctKey = key.Equals(this.key);
+            key.PlaceInLock(this, correctKey);
+            key.OnPickup.AddListener(Key_OnPickup);
         }
     }
 
-    private void EnterKey(Key key)
+    private void OnTriggerExit(Collider other)
     {
-        isSearching = false;
-        placedKey = key;
-        bool correctKey = key.Equals(this.key);
-        key.PlaceInLock(this, correctKey);
-        key.OnPickup.AddListener(Key_OnPickup);
+        if (CanExit && other.TryGetComponent(out Key key))
+        {
+            if (key.Equals(placedKey))
+            {
+                Key_OnPickup();
+            }
+        }
     }
 
     private void Key_OnPickup()
     {
         placedKey.OnPickup.RemoveListener(Key_OnPickup);
-
         if (placedKey.Equals(key))
         {
             ToggleLock(true);
         }
-
-        StartCoroutine(SearchDelayCoroutine());
-
-        IEnumerator SearchDelayCoroutine()
-        {
-            yield return new WaitForSeconds(searchDelayAfterPickup);
-            isSearching = true;
-            placedKey = null;
-        }
+        placedKey = null;
+        lastInteractTime = Time.time;
     }
 
     public void ToggleLock(bool locked)
     {
-        StartCoroutine(LockCoroutine());
-
-        IEnumerator LockCoroutine()
+        if (locked)
         {
-            yield return new WaitForSeconds(delay);
-            if (locked)
+            if (relockable)
             {
                 OnLocked.Invoke();
             }
-            else
-            {
-                OnUnlocked.Invoke();
-            }
+        }
+        else
+        {
+            OnUnlocked.Invoke();
         }
     }
 

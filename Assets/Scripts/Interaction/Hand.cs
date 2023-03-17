@@ -30,6 +30,7 @@ namespace Hjelmqvist.VR
         [SerializeField] AnimationCurve grabSpeed;
 
         bool isGrabbing = false;
+        bool wasGrabbing = false;
 
         float holdStartTime;
         float holdTargetTime;
@@ -50,6 +51,9 @@ namespace Hjelmqvist.VR
 
         void Update()
         {
+            wasGrabbing = isGrabbing;
+            isGrabbing = squeezeAction.GetAxis(handType) > grabStrengthThreshold;
+
             if (!isHolding) // Search for object
             {
                 TryPickupInteractable();
@@ -61,15 +65,10 @@ namespace Hjelmqvist.VR
                     heldInteractable.Interact();
                 }
 
-                if (squeezeAction.GetAxis(handType) < grabStrengthThreshold)
+                if (wasGrabbing && !isGrabbing)
                 {
                     DropInteractable(); // Drop object
                 }
-            }
-
-            if (isGrabbing && squeezeAction.GetAxis(handType) < grabStrengthThreshold)
-            {
-                isGrabbing = false;
             }
         }
 
@@ -86,7 +85,7 @@ namespace Hjelmqvist.VR
         {
             if (TryGetInteractable(out Interactable interactable))
             {
-                if (!isGrabbing && squeezeAction.GetAxis(handType) > grabStrengthThreshold)
+                if (!wasGrabbing && isGrabbing)
                 {
                     PickupInteractable(interactable);
                 }
@@ -98,7 +97,6 @@ namespace Hjelmqvist.VR
             StopHover();
             interactable.Pickup(this);
             heldInteractable = interactable;
-            isGrabbing = true;
             isHolding = true;
             holdStartTime = Time.time;
             holdTargetTime = holdStartTime + timeToReachHand;
