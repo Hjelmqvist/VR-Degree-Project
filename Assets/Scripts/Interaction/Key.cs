@@ -27,7 +27,7 @@ public class Key : Interactable
         isInLock = true;
         inCorrectLock = correctKey;
 
-        if (correctKey)
+        if (correctKey && setParentOnSuccess)
         {
             transform.SetParent(lockObject.transform);
         }
@@ -45,6 +45,7 @@ public class Key : Interactable
         base.Pickup(hand);
         transform.SetParent(null);
         isInLock = false;
+        rb.isKinematic = false;
         StopAllCoroutines();
     }
 

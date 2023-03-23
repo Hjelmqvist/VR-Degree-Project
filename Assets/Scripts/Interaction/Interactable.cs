@@ -8,18 +8,21 @@ namespace Hjelmqvist.VR
     [RequireComponent(typeof(Rigidbody))]
     public class Interactable : MonoBehaviour
     {
+        [SerializeField] protected int itemLayer = 7;
+        [SerializeField] protected int playerLayer = 6;
+
         [Header("Highlight")]
-        [SerializeField] Material hoverMaterial;
-        List<Hand> hoveringHands = new List<Hand>();
+        [SerializeField] protected Material hoverMaterial;
+        protected List<Hand> hoveringHands = new List<Hand>();
         protected Hand holdingHand;
 
         [Header("Posing")]
-        [SerializeField] bool usePoser = true;
-        [SerializeField] float poseBlendTime = 0.1f;
-        [SerializeField] float skeletonBlendTime = 0f;
+        [SerializeField] protected bool usePoser = true;
+        [SerializeField] protected float poseBlendTime = 0.1f;
+        [SerializeField] protected float skeletonBlendTime = 0f;
 
         protected Rigidbody rb;
-        SteamVR_Skeleton_Poser skeletonPoser;
+        protected SteamVR_Skeleton_Poser skeletonPoser;
         MeshRenderer[] meshRenderers;
         bool isHighlighting = false;
 
@@ -91,8 +94,8 @@ namespace Hjelmqvist.VR
                 hand.Skeleton.BlendToPoser(skeletonPoser, poseBlendTime);
             }
             rb.useGravity = false;
-            rb.isKinematic = false;
             holdingHand = hand;
+            gameObject.layer = playerLayer;
             OnPickup.Invoke();
         }
 
@@ -104,6 +107,7 @@ namespace Hjelmqvist.VR
             }
             rb.useGravity = true;
             holdingHand = null;
+            gameObject.layer = itemLayer;
             OnDrop.Invoke();
         }
 

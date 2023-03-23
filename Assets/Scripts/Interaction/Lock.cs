@@ -4,23 +4,26 @@ using UnityEngine.Events;
 public class Lock : MonoBehaviour
 {
     [SerializeField] Key key;
-    [SerializeField] float delay = 0f;
-    [SerializeField] float distanceThreshold = 0.1f;
-    [SerializeField] float interactDelay = 2f;
+    [SerializeField] float interactCooldown = 1f;
     [SerializeField] bool relockable = false;
+    [SerializeField] Collider col;
     [SerializeField] UnityEvent OnLocked;
     [SerializeField] UnityEvent OnUnlocked;
 
     float lastInteractTime = float.MinValue;
     Key placedKey;
 
-    bool IsSearching => placedKey == null && Time.time >= lastInteractTime + interactDelay;
-    bool CanExit => placedKey != null && Time.time >= lastInteractTime + interactDelay;
+    bool IsSearching => placedKey == null && Time.time >= lastInteractTime + interactCooldown;
+    bool CanExit => placedKey != null && Time.time >= lastInteractTime + interactCooldown;
 
     private void OnTriggerStay(Collider other)
     {
         if (IsSearching && other.TryGetComponent(out Key key))
         {
+            if (col)
+            {
+                Physics.IgnoreCollision(col, key.GetComponent<Collider>(), true);
+            }
             lastInteractTime = Time.time;
             placedKey = key;
             bool correctKey = key.Equals(this.key);
@@ -42,6 +45,11 @@ public class Lock : MonoBehaviour
 
     private void Key_OnPickup()
     {
+        if (col)
+        {
+            Physics.IgnoreCollision(col, placedKey.GetComponent<Collider>(), false);
+        }
+
         placedKey.OnPickup.RemoveListener(Key_OnPickup);
         if (placedKey.Equals(key))
         {
@@ -64,11 +72,5 @@ public class Lock : MonoBehaviour
         {
             OnUnlocked.Invoke();
         }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, distanceThreshold);
     }
 }
