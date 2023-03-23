@@ -14,6 +14,7 @@ public class HandController : MonoBehaviour
     public bool IsControlling = true;
 
     public Transform Input => handInput;
+    public Rigidbody RB => rb;
 
     private void Awake()
     {

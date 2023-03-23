@@ -4,10 +4,11 @@ using Valve.VR;
 
 public class Handle : Interactable
 {
-    [SerializeField] Vector3 handOffset;
+    [Header("Handle specific")]
+    [SerializeField] Vector3 handOffset; 
     HandController controller;
 
-    const float BreakDistance = 0.5f;
+    const float BreakDistance = 0.8f;
 
     public override void Pickup(Hand hand)
     {
@@ -33,6 +34,20 @@ public class Handle : Interactable
 
     public override void HeldFixedUpdate(float step)
     {
+        if (controller)
+        {
+            controller.RB.velocity = Vector3.zero;
+            controller.RB.angularVelocity = Vector3.zero;
+
+            if (Vector3.Distance(holdingHand.transform.position, controller.Input.position) > BreakDistance)
+            {
+                holdingHand.DropInteractable();
+                return;
+            }
+        }
+
+        //TODO: Figure out the math to not need the offset?
+
         SteamVR_Skeleton_PoseSnapshot snapshot = skeletonPoser.GetBlendedPose(holdingHand.Skeleton);
         Vector3 offset = handOffset;
         if (holdingHand.HandType == SteamVR_Input_Sources.LeftHand)
@@ -42,10 +57,5 @@ public class Handle : Interactable
         Vector3 position = transform.TransformPoint(-snapshot.position + offset);
         holdingHand.transform.position = position;
         holdingHand.transform.rotation = transform.rotation * Quaternion.Inverse(snapshot.rotation);
-
-        if (controller && Vector3.Distance(holdingHand.transform.position, controller.Input.position) > BreakDistance)
-        {
-            holdingHand.DropInteractable();
-        }
     }
 }

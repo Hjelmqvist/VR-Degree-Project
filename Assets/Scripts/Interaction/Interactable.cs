@@ -8,6 +8,7 @@ namespace Hjelmqvist.VR
     [RequireComponent(typeof(Rigidbody))]
     public class Interactable : MonoBehaviour
     {
+        [SerializeField] protected bool canBeRangedGrabbed = true;
         [SerializeField] protected int itemLayer = 7;
         [SerializeField] protected int playerLayer = 6;
 
@@ -33,7 +34,7 @@ namespace Hjelmqvist.VR
         const float MaxAngularVelocityChange = 10f;
         const float AngularVelocitySpeed = 50f;
 
-        public virtual bool CanBeGrabbed => holdingHand == null;
+        public virtual bool CanBeGrabbed(bool ranged) => holdingHand == null && (canBeRangedGrabbed || !ranged);
 
         protected virtual void Awake()
         {

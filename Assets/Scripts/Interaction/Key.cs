@@ -20,7 +20,7 @@ public class Key : Interactable
         Lerp
     }
 
-    public override bool CanBeGrabbed => base.CanBeGrabbed && (!isInLock  || (canBeTakenFromCorrectLock || !inCorrectLock));
+    public override bool CanBeGrabbed(bool ranged) => base.CanBeGrabbed(ranged) && (!isInLock  || (canBeTakenFromCorrectLock || !inCorrectLock));
 
     public void PlaceInLock(Lock lockObject, bool correctKey)
     {

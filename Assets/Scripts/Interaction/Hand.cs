@@ -142,7 +142,7 @@ namespace Hjelmqvist.VR
             Collider[] overlapping = Physics.OverlapSphere(overlapPosition.position, overlapRadius, overlapLayers);
             for (int i = 0; i < overlapping.Length; i++)
             {
-                if (overlapping[i].TryGetComponent(out Interactable current) && current.CanBeGrabbed)
+                if (overlapping[i].TryGetComponent(out Interactable current) && current.CanBeGrabbed(false))
                 {
                     float distance = Vector3.Distance(current.transform.position, overlapPosition.position);
                     if (distance < closestDistance)
@@ -162,7 +162,7 @@ namespace Hjelmqvist.VR
             RaycastHit[] hits = Physics.SphereCastAll(castTransform.position, castRadius, castTransform.forward, castDistance);
             for (int i = 0; i < hits.Length; i++)
             {
-                if (hits[i].transform.TryGetComponent(out Interactable current) && current.CanBeGrabbed)
+                if (hits[i].transform.TryGetComponent(out Interactable current) && current.CanBeGrabbed(true))
                 {
                     interactable = current;
                     return true;
