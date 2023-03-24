@@ -93,6 +93,7 @@ public class Key : Interactable
 
         transform.position = endPosition;
         transform.rotation = endRotation;
+
         if (correctKey)
         {
             lockObject.ToggleLock(false);

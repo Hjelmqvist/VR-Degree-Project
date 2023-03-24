@@ -1,20 +1,21 @@
 using UnityEngine;
 using Valve.VR;
-using Valve.VR.InteractionSystem;
 
 namespace Hjelmqvist.VR
 {
+    [RequireComponent(typeof(HandController))]
     public class Hand : MonoBehaviour
     {
         [SerializeField] SteamVR_Input_Sources handType = SteamVR_Input_Sources.LeftHand;
         [SerializeField, Range(0, 1)] float grabStrengthThreshold = 0.1f;
         [SerializeField] SteamVR_Action_Single squeezeAction = SteamVR_Input.GetAction<SteamVR_Action_Single>("Squeeze");
         [SerializeField] SteamVR_Action_Boolean interactAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("Interact");
+        [SerializeField] LayerMask interactLayers;
+        [SerializeField] LayerMask rangedBlockLayers;
 
         [Header("Finding Interactable"), Space(10)]
         [SerializeField] Transform overlapPosition;
         [SerializeField] float overlapRadius;
-        [SerializeField] LayerMask overlapLayers;
 
         [Space(10)]
         [SerializeField] Transform castTransform;
@@ -36,19 +37,21 @@ namespace Hjelmqvist.VR
         float holdStartTime;
         float holdTargetTime;
 
+        Collider collider;
+        HandController handController;
         SteamVR_Behaviour_Skeleton skeleton;
 
-        public SteamVR_Behaviour_Skeleton Skeleton
-        {
-            get
-            {
-                if (skeleton == null)
-                    skeleton = GetComponentInChildren<SteamVR_Behaviour_Skeleton>();
-                return skeleton;
-            }
-        }
-
+        public Collider Collider => collider;
+        public HandController Controller => handController;
+        public SteamVR_Behaviour_Skeleton Skeleton => skeleton;
         public SteamVR_Input_Sources HandType => handType;
+
+        private void Start()
+        {
+            collider = GetComponent<Collider>();
+            handController = GetComponent<HandController>();
+            skeleton = GetComponentInChildren<SteamVR_Behaviour_Skeleton>();
+        }
 
         void Update()
         {
@@ -139,7 +142,7 @@ namespace Hjelmqvist.VR
             float closestDistance = float.MaxValue;
             interactable = null;
 
-            Collider[] overlapping = Physics.OverlapSphere(overlapPosition.position, overlapRadius, overlapLayers);
+            Collider[] overlapping = Physics.OverlapSphere(overlapPosition.position, overlapRadius, interactLayers);
             for (int i = 0; i < overlapping.Length; i++)
             {
                 if (overlapping[i].TryGetComponent(out Interactable current) && current.CanBeGrabbed(false))
@@ -159,13 +162,17 @@ namespace Hjelmqvist.VR
         private bool TryFindFindInteractableWithCast(out Interactable interactable)
         {
             interactable = null;
-            RaycastHit[] hits = Physics.SphereCastAll(castTransform.position, castRadius, castTransform.forward, castDistance);
+            RaycastHit[] hits = Physics.SphereCastAll(castTransform.position, castRadius, castTransform.forward, castDistance, interactLayers);
             for (int i = 0; i < hits.Length; i++)
             {
-                if (hits[i].transform.TryGetComponent(out Interactable current) && current.CanBeGrabbed(true))
+                if (hits[i].transform.TryGetComponent(out Interactable current))
                 {
-                    interactable = current;
-                    return true;
+                    Vector3 direction = hits[i].transform.position - castTransform.position;
+                    if (current.CanBeGrabbed(true) && !Physics.Raycast(castTransform.position, direction, direction.magnitude, rangedBlockLayers))
+                    {
+                        interactable = current;
+                        return true;
+                    }
                 }
             }
 

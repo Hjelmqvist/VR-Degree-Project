@@ -6,38 +6,38 @@ public class Handle : Interactable
 {
     [Header("Handle specific")]
     [SerializeField] Vector3 handOffset; 
+
     HandController controller;
+    Rigidbody handRigidbody;
+    Transform handTransform;
 
     const float BreakDistance = 0.8f;
 
     public override void Pickup(Hand hand)
     {
         base.Pickup(hand);
-        Physics.IgnoreCollision(GetComponent<Collider>(), hand.GetComponent<Collider>());
-        if (hand.TryGetComponent(out controller))
-        {
-            controller.IsControlling = false;
-        }
+        controller = hand.Controller;
+        controller.IsControlling = false;
+        handRigidbody = controller.RB;
+        handTransform = hand.transform;
     }
 
     public override void Drop(Hand hand)
     {
         base.Drop(hand);
         rb.useGravity = false;
-        Physics.IgnoreCollision(GetComponent<Collider>(), hand.GetComponent<Collider>(), false);
-        if (controller)
-        {
-            controller.IsControlling = true;
-            controller = null;
-        }
+        controller.IsControlling = true;
+        controller = null;
+        handRigidbody = null;
+        handTransform = null;
     }
 
     public override void HeldFixedUpdate(float step)
     {
         if (controller)
         {
-            controller.RB.velocity = Vector3.zero;
-            controller.RB.angularVelocity = Vector3.zero;
+            handRigidbody.velocity = Vector3.zero;
+            handRigidbody.angularVelocity = Vector3.zero;
 
             if (Vector3.Distance(holdingHand.transform.position, controller.Input.position) > BreakDistance)
             {
@@ -49,13 +49,16 @@ public class Handle : Interactable
         //TODO: Figure out the math to not need the offset?
 
         SteamVR_Skeleton_PoseSnapshot snapshot = skeletonPoser.GetBlendedPose(holdingHand.Skeleton);
+
         Vector3 offset = handOffset;
         if (holdingHand.HandType == SteamVR_Input_Sources.LeftHand)
         {
             offset.x = -offset.x;
         }
-        Vector3 position = transform.TransformPoint(-snapshot.position + offset);
-        holdingHand.transform.position = position;
-        holdingHand.transform.rotation = transform.rotation * Quaternion.Inverse(snapshot.rotation);
+
+        handTransform.position = transform.TransformPoint(-snapshot.position + offset);
+        handTransform.rotation = transform.rotation * Quaternion.Inverse(snapshot.rotation);
+
+        //TODO: Add velocity/movement/rotation to parent object?
     }
 }

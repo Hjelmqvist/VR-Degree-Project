@@ -5,7 +5,7 @@ using Valve.VR;
 
 namespace Hjelmqvist.VR
 {
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody), typeof(SteamVR_Skeleton_Poser))]
     public class Interactable : MonoBehaviour
     {
         [SerializeField] protected bool canBeRangedGrabbed = true;
@@ -18,10 +18,10 @@ namespace Hjelmqvist.VR
         protected Hand holdingHand;
 
         [Header("Posing")]
-        [SerializeField] protected bool usePoser = true;
         [SerializeField] protected float poseBlendTime = 0.1f;
         [SerializeField] protected float skeletonBlendTime = 0f;
 
+        protected Collider collider;
         protected Rigidbody rb;
         protected SteamVR_Skeleton_Poser skeletonPoser;
         MeshRenderer[] meshRenderers;
@@ -38,6 +38,7 @@ namespace Hjelmqvist.VR
 
         protected virtual void Awake()
         {
+            collider = GetComponent<Collider>();
             rb = GetComponent<Rigidbody>();
             meshRenderers = GetComponentsInChildren<MeshRenderer>();
             skeletonPoser = GetComponent<SteamVR_Skeleton_Poser>();
@@ -90,44 +91,27 @@ namespace Hjelmqvist.VR
 
         public virtual void Pickup(Hand hand)
         {
-            if (usePoser)
-            {
-                hand.Skeleton.BlendToPoser(skeletonPoser, poseBlendTime);
-            }
+            hand.Skeleton.BlendToPoser(skeletonPoser, poseBlendTime);
             rb.useGravity = false;
             holdingHand = hand;
-            gameObject.layer = playerLayer;
+            Physics.IgnoreCollision(collider, hand.Collider);
             OnPickup.Invoke();
         }
 
         public virtual void Drop(Hand hand)
         {
-            if (usePoser)
-            {
-                hand.Skeleton.BlendToSkeleton(skeletonBlendTime);
-            }
+            hand.Skeleton.BlendToSkeleton(skeletonBlendTime);
+            Physics.IgnoreCollision(collider, hand.Collider, false);
             rb.useGravity = true;
             holdingHand = null;
-            gameObject.layer = itemLayer;
             OnDrop.Invoke();
         }
 
         public virtual void HeldFixedUpdate(float step)
         {
-            SteamVR_Behaviour_Skeleton skeleton = holdingHand.Skeleton;
-            Vector3 targetPosition;
-            Quaternion targetRotation;
-
-            if (usePoser)
-            {
-                targetPosition = holdingHand.transform.TransformPoint(skeletonPoser.GetBlendedPose(skeleton).position);
-                targetRotation = holdingHand.transform.rotation * skeletonPoser.GetBlendedPose(skeleton).rotation;
-            }
-            else
-            {
-                targetPosition = holdingHand.transform.position;
-                targetRotation = holdingHand.transform.rotation;
-            }
+            SteamVR_Skeleton_PoseSnapshot snapshot = skeletonPoser.GetBlendedPose(holdingHand.Skeleton);
+            Vector3 targetPosition = holdingHand.transform.TransformPoint(snapshot.position);
+            Quaternion targetRotation = holdingHand.transform.rotation * snapshot.rotation;
 
             SetVelocity(targetPosition, step);
             SetAngularVelocity(targetRotation, step);

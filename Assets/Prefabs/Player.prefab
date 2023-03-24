@@ -959,11 +959,14 @@ MonoBehaviour:
   interactAction:
     actionPath: /actions/default/in/Interact
     needsReinit: 0
+  interactLayers:
+    serializedVersion: 2
+    m_Bits: 385
+  rangedBlockLayers:
+    serializedVersion: 2
+    m_Bits: 257
   overlapPosition: {fileID: 3784533423172873415}
   overlapRadius: 0.05
-  overlapLayers:
-    serializedVersion: 2
-    m_Bits: 2147483647
   castTransform: {fileID: 1072691036}
   castRadius: 0.2
   castDistance: 1
@@ -1045,7 +1048,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.038461685
+        value: 0.00815773
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1203,11 +1206,14 @@ MonoBehaviour:
   interactAction:
     actionPath: /actions/default/in/Interact
     needsReinit: 0
+  interactLayers:
+    serializedVersion: 2
+    m_Bits: 385
+  rangedBlockLayers:
+    serializedVersion: 2
+    m_Bits: 257
   overlapPosition: {fileID: 3786235247328086319}
   overlapRadius: 0.05
-  overlapLayers:
-    serializedVersion: 2
-    m_Bits: 2147483647
   castTransform: {fileID: 1391970703}
   castRadius: 0.2
   castDistance: 1
@@ -1289,7 +1295,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.038461685
+        value: 0.00815773
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1751,7 +1757,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 1.8
-  m_Radius: 0.01
+  m_Radius: 0.1
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
