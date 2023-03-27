@@ -55,7 +55,7 @@ public class HandController : MonoBehaviour
         meshCollider.sharedMesh = colliderMesh;
     }
 
-    private void SetVelocity(Vector3 targetPosition)
+    public void SetVelocity(Vector3 targetPosition)
     {
         Vector3 distance = targetPosition - transform.position;
         Vector3 targetVelocity = distance / Time.fixedDeltaTime;
