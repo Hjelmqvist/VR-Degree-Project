@@ -167,7 +167,7 @@ namespace Hjelmqvist.VR
             {
                 if (hits[i].transform.TryGetComponent(out Interactable current))
                 {
-                    Vector3 direction = hits[i].transform.position - castTransform.position;
+                    Vector3 direction = hits[i].point - castTransform.position;
                     if (current.CanBeGrabbed(true) && !Physics.Raycast(castTransform.position, direction, direction.magnitude, rangedBlockLayers))
                     {
                         interactable = current;

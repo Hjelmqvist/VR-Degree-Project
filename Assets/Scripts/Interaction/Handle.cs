@@ -7,20 +7,26 @@ public class Handle : Interactable
     [Header("Handle specific")]
     [SerializeField] Vector3 handOffset;
     [SerializeField] Rigidbody bodyToMove;
-    [SerializeField] float minDistanceToMove = 0.1f;
-    [SerializeField] float dragMultiplier = 2f;
+    [SerializeField] Collider[] collidersToIgnore;
 
     HandController controller;
     Rigidbody handRigidbody;
     Transform handTransform;
     Transform handInput;
 
+    const float MinDistanceToMove = 0.01f;
+    const float DragMultiplier = 4f;
     const float BreakDistance = 0.8f;
     const float BreakDotRotationThreshold = 0f;
 
     public override void Pickup(Hand hand)
     {
         base.Pickup(hand);
+
+        for (int i = 0; i < collidersToIgnore.Length; i++)
+        {
+            Physics.IgnoreCollision(collidersToIgnore[i], hand.Collider);
+        }
 
         controller = hand.Controller;
         controller.IsControlling = false;
@@ -32,8 +38,13 @@ public class Handle : Interactable
     public override void Drop(Hand hand)
     {
         base.Drop(hand);
-
         rb.useGravity = false;
+
+        for (int i = 0; i < collidersToIgnore.Length; i++)
+        {
+            Physics.IgnoreCollision(collidersToIgnore[i], hand.Collider, false);
+        }
+
         controller.IsControlling = true;
         controller = null;
         handRigidbody = null;
@@ -51,16 +62,16 @@ public class Handle : Interactable
             offset.x = -offset.x;
         }
 
-        handTransform.position = transform.TransformPoint(-snapshot.position + offset);
-        //controller.SetVelocity(transform.TransformPoint(-snapshot.position + offset));
+        handRigidbody.velocity = Vector3.zero;
         handRigidbody.angularVelocity = Vector3.zero;
+        handTransform.position = transform.TransformPoint(-snapshot.position + offset);
         handTransform.rotation = transform.rotation * Quaternion.Inverse(snapshot.rotation);
 
         float handDistance = Vector3.Distance(handTransform.position, handInput.position);
 
-        if (bodyToMove && handDistance > minDistanceToMove)
+        if (bodyToMove && handDistance > MinDistanceToMove)
         {
-            bodyToMove.AddForceAtPosition((handInput.position - handTransform.position) * dragMultiplier, transform.position, ForceMode.Acceleration);
+            bodyToMove.AddForceAtPosition((handInput.position - handTransform.position) * DragMultiplier, transform.position, ForceMode.Acceleration);
             Debug.Log(bodyToMove.velocity);
         }
 

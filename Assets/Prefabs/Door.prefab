@@ -395,10 +395,11 @@ MonoBehaviour:
       m_Calls: []
   handOffset: {x: 0.603, y: 0.446, z: 0.131}
   bodyToMove: {fileID: 751802468}
-  minDistanceToMove: 0.1
+  minDistanceToMove: 0.01
   dragMultiplier: 5
   collidersToIgnore:
   - {fileID: 2064111162269912566}
+  - {fileID: 751802473}
 --- !u!1 &7486176141814344100
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,10 +740,11 @@ MonoBehaviour:
       m_Calls: []
   handOffset: {x: 0.603, y: 0.446, z: 0.131}
   bodyToMove: {fileID: 751802468}
-  minDistanceToMove: 0.1
+  minDistanceToMove: 0.01
   dragMultiplier: 5
   collidersToIgnore:
   - {fileID: 2064111162269912566}
+  - {fileID: 751802473}
 --- !u!1001 &359586184
 PrefabInstance:
   m_ObjectHideFlags: 0
