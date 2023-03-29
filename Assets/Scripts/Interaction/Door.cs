@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(HingeJoint))]
 public class Door : MonoBehaviour
 {
     [SerializeField] float unlockedMinLimit;
     [SerializeField] float unlockedMaxLimit;
+    [SerializeField] UnityEvent OnLocked;
+    [SerializeField] UnityEvent OnUnlocked;
 
     HingeJoint joint;
     JointLimits lockedLimits;
@@ -22,10 +25,12 @@ public class Door : MonoBehaviour
     public void Lock()
     {
         joint.limits = lockedLimits;
+        OnLocked.Invoke();
     }
 
     public void Unlock()
     {
         joint.limits = unlockedLimits;
+        OnUnlocked.Invoke();
     }
 }
