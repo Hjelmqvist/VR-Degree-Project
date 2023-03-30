@@ -10,8 +10,13 @@ public class CombinationLock : MonoBehaviour
     [SerializeField] UnityEvent OnCorrectGuess;
     [SerializeField] UnityEvent OnWrongGuess;
 
-    string guess;
+    string guess = "";
     bool wasCorrect = false;
+
+    private void Awake()
+    {
+        text.text = GetOutput();
+    }
 
     public void AddInput(char value)
     {

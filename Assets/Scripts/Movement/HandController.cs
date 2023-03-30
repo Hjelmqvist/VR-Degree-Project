@@ -36,11 +36,11 @@ public class HandController : MonoBehaviour
             Vector3 positionDelta = handInput.position - cameraPosition;
             if (Physics.Raycast(cameraPosition, positionDelta, out RaycastHit hit, positionDelta.magnitude, blockingLayers))
             {
-                SetVelocity(hit.point);
+                rb.SetVelocity(hit.point);
             }
             else
             {
-                SetVelocity(handInput.position);
+                rb.SetVelocity(handInput.position);
             }
 
             rb.angularVelocity = Vector3.zero;
@@ -53,12 +53,5 @@ public class HandController : MonoBehaviour
         Mesh colliderMesh = new Mesh();
         meshRenderer.BakeMesh(colliderMesh);
         meshCollider.sharedMesh = colliderMesh;
-    }
-
-    public void SetVelocity(Vector3 targetPosition)
-    {
-        Vector3 distance = targetPosition - transform.position;
-        Vector3 targetVelocity = distance / Time.fixedDeltaTime;
-        rb.velocity = Vector3.MoveTowards(rb.velocity, targetVelocity, maxVelocity);
     }
 }

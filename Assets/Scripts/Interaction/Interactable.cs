@@ -92,9 +92,9 @@ namespace Hjelmqvist.VR
         public virtual void Pickup(Hand hand)
         {
             hand.Skeleton.BlendToPoser(skeletonPoser, poseBlendTime);
+            Physics.IgnoreCollision(collider, hand.Collider);
             rb.useGravity = false;
             holdingHand = hand;
-            Physics.IgnoreCollision(collider, hand.Collider);
             OnPickup.Invoke();
         }
 
@@ -113,8 +113,8 @@ namespace Hjelmqvist.VR
             Vector3 targetPosition = holdingHand.transform.TransformPoint(snapshot.position);
             Quaternion targetRotation = holdingHand.transform.rotation * snapshot.rotation;
 
-            SetVelocity(targetPosition, step);
-            SetAngularVelocity(targetRotation, step);
+            rb.SetVelocity(targetPosition, step);
+            rb.SetAngularVelocity(targetRotation, step);
         }
 
         private void SetVelocity(Vector3 targetPosition, float step)
@@ -142,7 +142,7 @@ namespace Hjelmqvist.VR
 
         public virtual void Interact()
         {
-
+            // Override to add functionality for things like firing guns.
         }
     }
 }
