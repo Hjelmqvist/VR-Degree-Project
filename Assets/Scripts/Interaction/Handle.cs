@@ -15,19 +15,14 @@ public class Handle : Interactable
     Transform handInput;
 
     const float MinDistanceToMove = 0.01f;
-    const float DragMultiplier = 4f;
+    const float DragMultiplier = 0.05f;
     const float BreakDistance = 0.8f;
     const float BreakDotRotationThreshold = 0f;
 
     public override void Pickup(Hand hand)
     {
         base.Pickup(hand);
-
-        for (int i = 0; i < collidersToIgnore.Length; i++)
-        {
-            Physics.IgnoreCollision(collidersToIgnore[i], hand.Collider);
-        }
-
+        ToggleCollisions(hand, true);
         controller = hand.Controller;
         controller.IsControlling = false;
         handRigidbody = controller.RB;
@@ -38,18 +33,17 @@ public class Handle : Interactable
     public override void Drop(Hand hand)
     {
         base.Drop(hand);
+        ToggleCollisions(hand, false);
+        controller.IsControlling = true;
         rb.useGravity = false;
+    }
 
+    private void ToggleCollisions(Hand hand, bool ignore)
+    {
         for (int i = 0; i < collidersToIgnore.Length; i++)
         {
-            Physics.IgnoreCollision(collidersToIgnore[i], hand.Collider, false);
+            Physics.IgnoreCollision(collidersToIgnore[i], hand.Collider, ignore);
         }
-
-        controller.IsControlling = true;
-        controller = null;
-        handRigidbody = null;
-        handTransform = null;
-        handInput = null;
     }
 
     public override void HeldFixedUpdate(float step)
@@ -71,8 +65,9 @@ public class Handle : Interactable
 
         if (bodyToMove && handDistance > MinDistanceToMove)
         {
-            bodyToMove.AddForceAtPosition((handInput.position - handTransform.position) * DragMultiplier, transform.position, ForceMode.Acceleration);
-            Debug.Log(bodyToMove.velocity);
+            Vector3 direction = handInput.position - handTransform.position;
+            Vector3 targetVelocity = direction / Time.fixedDeltaTime * DragMultiplier;
+            bodyToMove.velocity = targetVelocity;
         }
 
         if (handDistance > BreakDistance ||
