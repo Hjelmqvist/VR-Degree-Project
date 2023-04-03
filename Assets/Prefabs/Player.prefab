@@ -961,10 +961,10 @@ MonoBehaviour:
     needsReinit: 0
   interactLayers:
     serializedVersion: 2
-    m_Bits: 385
-  rangedBlockLayers:
+    m_Bits: 384
+  blockingLayers:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 1025
   overlapPosition: {fileID: 3784533423172873415}
   overlapRadius: 0.05
   castTransform: {fileID: 1072691036}
@@ -1127,7 +1127,7 @@ MonoBehaviour:
   meshCollider: {fileID: 1961646431}
   blockingLayers:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 1335
   maxVelocity: 10
   IsControlling: 1
 --- !u!64 &1961646431
@@ -1208,10 +1208,10 @@ MonoBehaviour:
     needsReinit: 0
   interactLayers:
     serializedVersion: 2
-    m_Bits: 385
-  rangedBlockLayers:
+    m_Bits: 384
+  blockingLayers:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 1025
   overlapPosition: {fileID: 3786235247328086319}
   overlapRadius: 0.05
   castTransform: {fileID: 1391970703}
@@ -1374,7 +1374,7 @@ MonoBehaviour:
   meshCollider: {fileID: 1927962894}
   blockingLayers:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 1335
   maxVelocity: 10
   IsControlling: 1
 --- !u!64 &1927962894
@@ -1716,7 +1716,6 @@ GameObject:
   - component: {fileID: 3786235247327987791}
   - component: {fileID: 3786235247327987788}
   - component: {fileID: 3786235247327987776}
-  - component: {fileID: 1818713797}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -1799,22 +1798,6 @@ MonoBehaviour:
   head: {fileID: 3786235247327973469}
   player: {fileID: 3786235247327987791}
   body: {fileID: 6122192143327368790}
---- !u!114 &1818713797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3786235247327918133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1020c4c2a7a8131468d0fdaec349bef5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toggleControllersAction:
-    actionPath: /actions/default/in/Toggle Controllers
-    needsReinit: 0
-  hands: []
 --- !u!1 &3786235247327919707
 GameObject:
   m_ObjectHideFlags: 0

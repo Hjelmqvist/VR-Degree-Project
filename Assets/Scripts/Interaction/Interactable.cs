@@ -5,7 +5,7 @@ using Valve.VR;
 
 namespace Hjelmqvist.VR
 {
-    [RequireComponent(typeof(Rigidbody), typeof(SteamVR_Skeleton_Poser))]
+    [RequireComponent(typeof(Collider), typeof(Rigidbody), typeof(SteamVR_Skeleton_Poser))]
     public class Interactable : MonoBehaviour
     {
         [SerializeField] protected bool canBeRangedGrabbed = true;
@@ -14,10 +14,6 @@ namespace Hjelmqvist.VR
         [SerializeField] protected Material hoverMaterial;
         protected List<Hand> hoveringHands = new List<Hand>();
         protected Hand holdingHand;
-
-        [Header("Posing")]
-        [SerializeField] protected float poseBlendTime = 0.1f;
-        [SerializeField] protected float skeletonBlendTime = 0f;
 
         protected Collider collider;
         protected Rigidbody rb;
@@ -28,9 +24,8 @@ namespace Hjelmqvist.VR
         public UnityEvent OnPickup;
         public UnityEvent OnDrop;
 
-        const float MaxVelocityChange = 20f;
-        const float MaxAngularVelocityChange = 10f;
-        const float AngularVelocitySpeed = 50f;
+        const float PoseBlendTime = 0.1f;
+        const float SkeletonBlendTime = 0f;
 
         public virtual bool CanBeGrabbed(bool ranged) => holdingHand == null && (canBeRangedGrabbed || !ranged);
 
@@ -89,7 +84,7 @@ namespace Hjelmqvist.VR
 
         public virtual void Pickup(Hand hand)
         {
-            hand.Skeleton.BlendToPoser(skeletonPoser, poseBlendTime);
+            hand.Skeleton.BlendToPoser(skeletonPoser, PoseBlendTime);
             Physics.IgnoreCollision(collider, hand.Collider);
             rb.useGravity = false;
             holdingHand = hand;
@@ -98,7 +93,7 @@ namespace Hjelmqvist.VR
 
         public virtual void Drop(Hand hand)
         {
-            hand.Skeleton.BlendToSkeleton(skeletonBlendTime);
+            hand.Skeleton.BlendToSkeleton(SkeletonBlendTime);
             Physics.IgnoreCollision(collider, hand.Collider, false);
             rb.useGravity = true;
             holdingHand = null;
@@ -113,29 +108,6 @@ namespace Hjelmqvist.VR
 
             rb.SetVelocity(targetPosition, step);
             rb.SetAngularVelocity(targetRotation, step);
-        }
-
-        private void SetVelocity(Vector3 targetPosition, float step)
-        {
-            Vector3 distance = targetPosition - transform.position;
-            Vector3 targetVelocity = distance / Time.fixedDeltaTime;
-            Vector3 velocity = targetVelocity * step;
-            rb.velocity = Vector3.MoveTowards(rb.velocity, velocity, MaxVelocityChange);
-        }
-
-        private void SetAngularVelocity(Quaternion targetRotation, float step)
-        {
-            Quaternion rotationDifference = targetRotation * Quaternion.Inverse(transform.rotation);
-            rotationDifference.ToAngleAxis(out float angle, out Vector3 axis);
-
-            if (angle > 180)
-                angle -= 360;
-
-            if (angle != 0 && !float.IsNaN(axis.x) && !float.IsInfinity(axis.x))
-            {
-                Vector3 angularTarget = angle * axis * step * AngularVelocitySpeed * Time.fixedDeltaTime;
-                rb.angularVelocity = Vector3.MoveTowards(rb.angularVelocity, angularTarget, MaxAngularVelocityChange);
-            }    
         }
 
         public virtual void Interact()
