@@ -9,8 +9,6 @@ namespace Hjelmqvist.VR
     public class Interactable : MonoBehaviour
     {
         [SerializeField] protected bool canBeRangedGrabbed = true;
-        [SerializeField] protected int itemLayer = 7;
-        [SerializeField] protected int playerLayer = 6;
 
         [Header("Highlight")]
         [SerializeField] protected Material hoverMaterial;

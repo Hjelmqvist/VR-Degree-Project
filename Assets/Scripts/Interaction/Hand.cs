@@ -11,7 +11,7 @@ namespace Hjelmqvist.VR
         [SerializeField] SteamVR_Action_Single squeezeAction = SteamVR_Input.GetAction<SteamVR_Action_Single>("Squeeze");
         [SerializeField] SteamVR_Action_Boolean interactAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("Interact");
         [SerializeField] LayerMask interactLayers;
-        [SerializeField] LayerMask rangedBlockLayers;
+        [SerializeField] LayerMask blockingLayers;
 
         [Header("Finding Interactable"), Space(10)]
         [SerializeField] Transform overlapPosition;
@@ -145,7 +145,9 @@ namespace Hjelmqvist.VR
             Collider[] overlapping = Physics.OverlapSphere(overlapPosition.position, overlapRadius, interactLayers);
             for (int i = 0; i < overlapping.Length; i++)
             {
-                if (overlapping[i].TryGetComponent(out Interactable current) && current.CanBeGrabbed(false))
+                Vector3 position = transform.position;
+                Vector3 direction = overlapping[i].transform.position - position;
+                if (overlapping[i].TryGetComponent(out Interactable current) && current.CanBeGrabbed(false) && IsNotBlocked(position, direction))
                 {
                     float distance = Vector3.Distance(current.transform.position, overlapPosition.position);
                     if (distance < closestDistance)
@@ -167,8 +169,9 @@ namespace Hjelmqvist.VR
             {
                 if (hits[i].transform.TryGetComponent(out Interactable current))
                 {
-                    Vector3 direction = hits[i].point - castTransform.position;
-                    if (current.CanBeGrabbed(true) && !Physics.Raycast(castTransform.position, direction, direction.magnitude, rangedBlockLayers))
+                    Vector3 position = castTransform.position;
+                    Vector3 direction = hits[i].point - position;
+                    if (current.CanBeGrabbed(true) && IsNotBlocked(position, direction))
                     {
                         interactable = current;
                         return true;
@@ -177,6 +180,11 @@ namespace Hjelmqvist.VR
             }
 
             return false;
+        }
+
+        private bool IsNotBlocked(Vector3 position, Vector3 direction)
+        {
+            return !Physics.Raycast(position, direction, direction.magnitude, blockingLayers);
         }
 
         private void StartHover(Interactable interactable, bool showLine = false)

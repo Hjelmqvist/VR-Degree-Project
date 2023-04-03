@@ -14,10 +14,19 @@ public class Handle : Interactable
     Transform handTransform;
     Transform handInput;
 
-    const float MinDistanceToMove = 0.01f;
-    const float DragMultiplier = 0.05f;
-    const float BreakDistance = 0.8f;
+    Quaternion startRotation;
+
+    const float MoveDistanceThreshold = 0.01f;
+    const float BreakDistanceThreshold = 0.8f;
     const float BreakDotRotationThreshold = 0f;
+    const float DragMultiplier = 0.05f;
+    const float RotateMultiplier = 2;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        startRotation = transform.rotation;
+    }
 
     public override void Pickup(Hand hand)
     {
@@ -46,6 +55,11 @@ public class Handle : Interactable
         }
     }
 
+    public void ResetRotation()
+    {
+        transform.rotation = startRotation;
+    }
+
     public override void HeldFixedUpdate(float step)
     {
         SteamVR_Skeleton_PoseSnapshot snapshot = skeletonPoser.GetBlendedPose(holdingHand.Skeleton);
@@ -63,14 +77,26 @@ public class Handle : Interactable
 
         float handDistance = Vector3.Distance(handTransform.position, handInput.position);
 
-        if (bodyToMove && handDistance > MinDistanceToMove)
+        if (bodyToMove && handDistance > MoveDistanceThreshold)
         {
             Vector3 direction = handInput.position - handTransform.position;
             Vector3 targetVelocity = direction / Time.fixedDeltaTime * DragMultiplier;
             bodyToMove.velocity = targetVelocity;
+
+            Quaternion rotationDifference = handInput.rotation * Quaternion.Inverse(handTransform.rotation);
+            rotationDifference.ToAngleAxis(out float angle, out Vector3 axis);
+
+            if (angle > 180)
+                angle -= 360;
+
+            if (angle != 0 && !float.IsNaN(axis.x) && !float.IsInfinity(axis.x))
+            {
+                Vector3 angularTarget = angle * axis * RotateMultiplier * Time.fixedDeltaTime;
+                bodyToMove.angularVelocity = angularTarget;
+            }
         }
 
-        if (handDistance > BreakDistance ||
+        if (handDistance > BreakDistanceThreshold ||
             Vector3.Dot(handTransform.forward, handInput.forward) < BreakDotRotationThreshold)
         {
             holdingHand.DropInteractable();
