@@ -73,4 +73,13 @@ public class Lock : MonoBehaviour
             OnUnlocked.Invoke();
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        if (key)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, key.transform.position);
+        }
+    }
 }

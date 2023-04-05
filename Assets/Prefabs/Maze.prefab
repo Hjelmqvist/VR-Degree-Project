@@ -159,8 +159,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canBeRangedGrabbed: 0
   hoverMaterial: {fileID: 2100000, guid: 7b939e5e799d98a469f594828ebab52e, type: 2}
-  poseBlendTime: 0.1
-  skeletonBlendTime: 0
   OnPickup:
     m_PersistentCalls:
       m_Calls: []
@@ -2243,9 +2241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeRangedGrabbed: 1
-  hoverMaterial: {fileID: 0}
-  poseBlendTime: 0.1
-  skeletonBlendTime: 0
+  hoverMaterial: {fileID: 2100000, guid: 7b939e5e799d98a469f594828ebab52e, type: 2}
   OnPickup:
     m_PersistentCalls:
       m_Calls: []
