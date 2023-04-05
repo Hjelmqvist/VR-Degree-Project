@@ -40,6 +40,7 @@ namespace Hjelmqvist.VR
         Collider collider;
         HandController handController;
         SteamVR_Behaviour_Skeleton skeleton;
+        Transform wristTransform; 
 
         public Collider Collider => collider;
         public HandController Controller => handController;
@@ -51,6 +52,7 @@ namespace Hjelmqvist.VR
             collider = GetComponent<Collider>();
             handController = GetComponent<HandController>();
             skeleton = GetComponentInChildren<SteamVR_Behaviour_Skeleton>();
+            wristTransform = skeleton.GetBone(1); // Wrist index
         }
 
         void Update()
@@ -145,9 +147,7 @@ namespace Hjelmqvist.VR
             Collider[] overlapping = Physics.OverlapSphere(overlapPosition.position, overlapRadius, interactLayers);
             for (int i = 0; i < overlapping.Length; i++)
             {
-                Vector3 position = transform.position;
-                Vector3 direction = overlapping[i].transform.position - position;
-                if (overlapping[i].TryGetComponent(out Interactable current) && current.CanBeGrabbed(false) && IsNotBlocked(position, direction))
+                if (overlapping[i].TryGetComponent(out Interactable current) && current.CanBeGrabbed(false) && IsNotBlocked(overlapping[i].transform.position))
                 {
                     float distance = Vector3.Distance(current.transform.position, overlapPosition.position);
                     if (distance < closestDistance)
@@ -169,9 +169,7 @@ namespace Hjelmqvist.VR
             {
                 if (hits[i].transform.TryGetComponent(out Interactable current))
                 {
-                    Vector3 position = castTransform.position;
-                    Vector3 direction = hits[i].point - position;
-                    if (current.CanBeGrabbed(true) && IsNotBlocked(position, direction))
+                    if (current.CanBeGrabbed(true) && IsNotBlocked(hits[i].transform.position))
                     {
                         interactable = current;
                         return true;
@@ -182,9 +180,10 @@ namespace Hjelmqvist.VR
             return false;
         }
 
-        private bool IsNotBlocked(Vector3 position, Vector3 direction)
+        private bool IsNotBlocked(Vector3 interactablePosition)
         {
-            return !Physics.Raycast(position, direction, direction.magnitude, blockingLayers);
+            Vector3 direction = interactablePosition - wristTransform.position;
+            return !Physics.Raycast(wristTransform.position, direction, direction.magnitude, blockingLayers);
         }
 
         private void StartHover(Interactable interactable, bool showLine = false)
