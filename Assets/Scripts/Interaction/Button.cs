@@ -4,8 +4,9 @@ using UnityEngine.Events;
 public class Button : MonoBehaviour
 {
     [SerializeField] ConfigurableJoint joint;
-    [SerializeField] float clickDistance;
-    [SerializeField] float releaseDistance;
+    [SerializeField] Vector3 pushedLocalPosition;
+    [SerializeField] Vector3 releasedLocalPosition;
+    [SerializeField] float positionPadding;
     [SerializeField] char value;
     [SerializeField] UnityEvent<char> OnClicked;
     [SerializeField] UnityEvent OnRelease;
@@ -25,13 +26,13 @@ public class Button : MonoBehaviour
     {
         if (!wasClicked)
         {
-            if (Vector3.Distance(startPosition, pushObject.localPosition) > clickDistance)
+            if (Vector3.Distance(pushObject.localPosition, pushedLocalPosition) < positionPadding)
             {
                 wasClicked = true;
                 OnClicked.Invoke(value);
             }
         }
-        else if (Vector3.Distance(startPosition, pushObject.localPosition) < releaseDistance)
+        else if (Vector3.Distance(pushObject.localPosition, releasedLocalPosition) < positionPadding)
         {
             wasClicked = false;
             OnRelease.Invoke();

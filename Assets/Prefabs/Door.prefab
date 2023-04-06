@@ -63,7 +63,10 @@ MonoBehaviour:
   key: {fileID: 832649864846595455}
   interactCooldown: 1
   relockable: 0
-  col: {fileID: 751802473}
+  collidersToIgnore:
+  - {fileID: 751802473}
+  - {fileID: 884650066850891716}
+  - {fileID: 8010571871229897198}
   OnLocked:
     m_PersistentCalls:
       m_Calls:
@@ -207,7 +210,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4513741313743035187}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1025, y: 1.0616, z: -0.0821}
+  m_LocalPosition: {x: -1.1025, y: 1.0616, z: -0.0695}
   m_LocalScale: {x: 0.12, y: 0.12, z: 0.12}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -335,8 +338,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canBeRangedGrabbed: 0
   hoverMaterial: {fileID: 2100000, guid: 7b939e5e799d98a469f594828ebab52e, type: 2}
-  poseBlendTime: 0.1
-  skeletonBlendTime: 0
   OnPickup:
     m_PersistentCalls:
       m_Calls: []
@@ -711,7 +712,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8198785062874427144}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -1.1025, y: 1.0616, z: 0.0804}
+  m_LocalPosition: {x: -1.1025, y: 1.0624, z: 0.0695}
   m_LocalScale: {x: 0.12, y: 0.12, z: 0.12}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -839,8 +840,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canBeRangedGrabbed: 0
   hoverMaterial: {fileID: 2100000, guid: 7b939e5e799d98a469f594828ebab52e, type: 2}
-  poseBlendTime: 0.1
-  skeletonBlendTime: 0
   OnPickup:
     m_PersistentCalls:
       m_Calls: []

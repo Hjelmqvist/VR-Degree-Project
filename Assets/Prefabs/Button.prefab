@@ -644,8 +644,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joint: {fileID: 939547556727172445}
-  clickDistance: 0.035
-  releaseDistance: 0.01
+  pushedLocalPosition: {x: 0, y: 0.03, z: 0}
+  releasedLocalPosition: {x: 0, y: 0.065, z: 0}
+  positionPadding: 0.005
   value: 49
   OnClicked:
     m_PersistentCalls:

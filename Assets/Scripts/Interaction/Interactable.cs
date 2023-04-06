@@ -27,6 +27,8 @@ namespace Hjelmqvist.VR
         const float PoseBlendTime = 0.1f;
         const float SkeletonBlendTime = 0f;
 
+        public Collider Collider => collider;
+
         public virtual bool CanBeGrabbed(bool ranged) => holdingHand == null && (canBeRangedGrabbed || !ranged);
 
         protected virtual void Awake()

@@ -6,7 +6,7 @@ public class Lock : MonoBehaviour
     [SerializeField] Key key;
     [SerializeField] float interactCooldown = 1f;
     [SerializeField] bool relockable = false;
-    [SerializeField] Collider col;
+    [SerializeField] Collider[] collidersToIgnore;
     [SerializeField] UnityEvent OnLocked;
     [SerializeField] UnityEvent OnUnlocked;
 
@@ -20,10 +20,7 @@ public class Lock : MonoBehaviour
     {
         if (IsSearching && other.TryGetComponent(out Key key))
         {
-            if (col)
-            {
-                Physics.IgnoreCollision(col, key.GetComponent<Collider>(), true);
-            }
+            SetIgnoreCollision(key, true);
             lastInteractTime = Time.time;
             placedKey = key;
             bool correctKey = key.Equals(this.key);
@@ -45,11 +42,7 @@ public class Lock : MonoBehaviour
 
     private void Key_OnPickup()
     {
-        if (col)
-        {
-            Physics.IgnoreCollision(col, placedKey.GetComponent<Collider>(), false);
-        }
-
+        SetIgnoreCollision(placedKey, false);
         placedKey.OnPickup.RemoveListener(Key_OnPickup);
         if (placedKey.Equals(key))
         {
@@ -57,6 +50,14 @@ public class Lock : MonoBehaviour
         }
         placedKey = null;
         lastInteractTime = Time.time;
+    }
+
+    private void SetIgnoreCollision(Key key, bool ignore)
+    {
+        for (int i = 0; i < collidersToIgnore.Length; i++)
+        {
+            Physics.IgnoreCollision(collidersToIgnore[i], key.Collider, ignore);
+        }
     }
 
     public void ToggleLock(bool locked)

@@ -62,6 +62,23 @@ public class Handle : Interactable
 
     public override void HeldFixedUpdate(float step)
     {
+        MoveHandToHandle();
+
+        float handDistance = Vector3.Distance(handTransform.position, handInput.position);
+
+        ApplyForcesToMovingBody(handDistance);
+
+        // Break hold if distance is too big or rotation is too different
+        if (handDistance > BreakDistanceThreshold ||
+            Vector3.Dot(handTransform.forward, handInput.forward) < BreakDotRotationThreshold)
+        {
+            holdingHand.DropInteractable();
+            return;
+        }
+    }
+
+    private void MoveHandToHandle()
+    {
         SteamVR_Skeleton_PoseSnapshot snapshot = skeletonPoser.GetBlendedPose(holdingHand.Skeleton);
 
         Vector3 offset = handOffset;
@@ -74,9 +91,10 @@ public class Handle : Interactable
         handRigidbody.angularVelocity = Vector3.zero;
         handTransform.position = transform.TransformPoint(-snapshot.position + offset);
         handTransform.rotation = transform.rotation * Quaternion.Inverse(snapshot.rotation);
+    }
 
-        float handDistance = Vector3.Distance(handTransform.position, handInput.position);
-
+    private void ApplyForcesToMovingBody(float handDistance)
+    {
         if (bodyToMove && handDistance > MoveDistanceThreshold)
         {
             Vector3 direction = handInput.position - handTransform.position;
@@ -94,13 +112,6 @@ public class Handle : Interactable
                 Vector3 angularTarget = angle * axis * RotateMultiplier * Time.fixedDeltaTime;
                 bodyToMove.angularVelocity = angularTarget;
             }
-        }
-
-        if (handDistance > BreakDistanceThreshold ||
-            Vector3.Dot(handTransform.forward, handInput.forward) < BreakDotRotationThreshold)
-        {
-            holdingHand.DropInteractable();
-            return;
         }
     }
 }

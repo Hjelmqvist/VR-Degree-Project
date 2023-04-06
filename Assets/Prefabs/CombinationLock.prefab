@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3581335057862871099}
   - component: {fileID: 3581335057862871097}
   - component: {fileID: 3581335057862871096}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 3581335058540517856}
   - component: {fileID: 3581335058540517859}
   - component: {fileID: 3581335058540517858}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TopPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -279,7 +279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3581335058944509555}
   - component: {fileID: 3581335058944509554}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CombinationLock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +369,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1294423536802828500}
   - component: {fileID: 3735797006534711205}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ButtonPress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -497,7 +497,7 @@ GameObject:
   m_Component:
   - component: {fileID: 408008804640179987}
   - component: {fileID: 7742244234431940008}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WrongGuess
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -662,6 +662,21 @@ PrefabInstance:
       propertyPath: OnClicked.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 832252143553818987, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547555913027788, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547556727172443, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 939547557246897665, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}
       propertyPath: m_RootOrder
@@ -732,6 +747,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 939547557246897726, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1164689246086991772, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}
       propertyPath: m_text
@@ -792,6 +812,21 @@ PrefabInstance:
     - target: {fileID: 1534523569, guid: c3bf4a52f8e7730478506a70d2cf3b0b, type: 3}
       propertyPath: OnClicked.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 832252143553818987, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547555913027788, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547556727172443, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 939547557246897665, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}
@@ -863,6 +898,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 939547557246897726, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1164689246086991772, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}
       propertyPath: m_text
@@ -923,6 +963,21 @@ PrefabInstance:
     - target: {fileID: 1534523569, guid: c3bf4a52f8e7730478506a70d2cf3b0b, type: 3}
       propertyPath: OnClicked.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 832252143553818987, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547555913027788, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547556727172443, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 939547557246897665, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}
@@ -994,6 +1049,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 939547557246897726, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1164689246086991772, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}
       propertyPath: m_text
@@ -1054,6 +1114,21 @@ PrefabInstance:
     - target: {fileID: 1534523569, guid: c3bf4a52f8e7730478506a70d2cf3b0b, type: 3}
       propertyPath: OnClicked.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 832252143553818987, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547555913027788, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547556727172443, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 939547557246897665, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}
@@ -1125,6 +1200,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 939547557246897726, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1164689246086991772, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}
       propertyPath: m_text
@@ -1185,6 +1265,21 @@ PrefabInstance:
     - target: {fileID: 1534523569, guid: c3bf4a52f8e7730478506a70d2cf3b0b, type: 3}
       propertyPath: OnClicked.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 832252143553818987, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547555913027788, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547556727172443, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 939547557246897665, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}
@@ -1256,6 +1351,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 939547557246897726, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1164689246086991772, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}
       propertyPath: m_text
@@ -1318,6 +1418,21 @@ PrefabInstance:
     - target: {fileID: 1534523569, guid: c3bf4a52f8e7730478506a70d2cf3b0b, type: 3}
       propertyPath: OnClicked.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 832252143553818987, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547555913027788, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547556727172443, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 939547557246897665, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}
@@ -1389,6 +1504,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 939547557246897726, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1164689246086991772, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}
       propertyPath: m_text
@@ -1449,6 +1569,21 @@ PrefabInstance:
     - target: {fileID: 1534523569, guid: c3bf4a52f8e7730478506a70d2cf3b0b, type: 3}
       propertyPath: OnClicked.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 832252143553818987, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547555913027788, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547556727172443, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 939547557246897665, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}
@@ -1520,6 +1655,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 939547557246897726, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1164689246086991772, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}
       propertyPath: m_text
@@ -1578,6 +1718,21 @@ PrefabInstance:
     - target: {fileID: 1534523569, guid: c3bf4a52f8e7730478506a70d2cf3b0b, type: 3}
       propertyPath: OnClicked.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 832252143553818987, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547555913027788, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547556727172443, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 939547557246897665, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}
@@ -1649,6 +1804,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 939547557246897726, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1534523571, guid: c3bf4a52f8e7730478506a70d2cf3b0b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c3bf4a52f8e7730478506a70d2cf3b0b, type: 3}
@@ -1704,6 +1864,21 @@ PrefabInstance:
     - target: {fileID: 1534523569, guid: c3bf4a52f8e7730478506a70d2cf3b0b, type: 3}
       propertyPath: OnClicked.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 832252143553818987, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547555913027788, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547556727172443, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 939547557246897665, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}
@@ -1774,6 +1949,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Button (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 939547557246897726, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1164689246086991772, guid: c3bf4a52f8e7730478506a70d2cf3b0b,
         type: 3}

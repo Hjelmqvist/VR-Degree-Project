@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4782018729473588850}
   - component: {fileID: 4842405339284096606}
   - component: {fileID: 4777272051551249672}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Lantern_Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 4772404008623132334}
   - component: {fileID: 4764682445333556674}
   - component: {fileID: 3991577024936929668}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Prop_Lantern_02_Glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 4772051123925580984}
   - component: {fileID: 4762586182753622718}
   - component: {fileID: 7723891465009131945}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Lantern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4778266933146063460}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.414, y: 0.78199995, z: 4.066}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
