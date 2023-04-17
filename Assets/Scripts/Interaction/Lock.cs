@@ -54,9 +54,13 @@ public class Lock : MonoBehaviour
 
     private void SetIgnoreCollision(Key key, bool ignore)
     {
+        Collider[] keyColliders = key.Colliders;
         for (int i = 0; i < collidersToIgnore.Length; i++)
         {
-            Physics.IgnoreCollision(collidersToIgnore[i], key.Collider, ignore);
+            for (int j = 0; j < keyColliders.Length; j++)
+            {
+                Physics.IgnoreCollision(collidersToIgnore[i], keyColliders[j], ignore);
+            }   
         }
     }
 

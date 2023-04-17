@@ -15,7 +15,7 @@ namespace Hjelmqvist.VR
         protected List<Hand> hoveringHands = new List<Hand>();
         protected Hand holdingHand;
 
-        protected Collider collider;
+        protected Collider[] colliders;
         protected Rigidbody rb;
         protected SteamVR_Skeleton_Poser skeletonPoser;
         MeshRenderer[] meshRenderers;
@@ -27,13 +27,13 @@ namespace Hjelmqvist.VR
         const float PoseBlendTime = 0.1f;
         const float SkeletonBlendTime = 0f;
 
-        public Collider Collider => collider;
+        public Collider[] Colliders => colliders;
 
         public virtual bool CanBeGrabbed(bool ranged) => holdingHand == null && (canBeRangedGrabbed || !ranged);
 
         protected virtual void Awake()
         {
-            collider = GetComponent<Collider>();
+            colliders = GetComponents<Collider>();
             rb = GetComponent<Rigidbody>();
             meshRenderers = GetComponentsInChildren<MeshRenderer>();
             skeletonPoser = GetComponent<SteamVR_Skeleton_Poser>();
@@ -87,7 +87,7 @@ namespace Hjelmqvist.VR
         public virtual void Pickup(Hand hand)
         {
             hand.Skeleton.BlendToPoser(skeletonPoser, PoseBlendTime);
-            Physics.IgnoreCollision(collider, hand.Collider);
+            IgnoreHandCollision(hand, true);
             rb.useGravity = false;
             holdingHand = hand;
             OnPickup.Invoke();
@@ -96,10 +96,18 @@ namespace Hjelmqvist.VR
         public virtual void Drop(Hand hand)
         {
             hand.Skeleton.BlendToSkeleton(SkeletonBlendTime);
-            Physics.IgnoreCollision(collider, hand.Collider, false);
+            IgnoreHandCollision(hand, false);
             rb.useGravity = true;
             holdingHand = null;
             OnDrop.Invoke();
+        }
+
+        private void IgnoreHandCollision(Hand hand, bool ignore)
+        {
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                Physics.IgnoreCollision(colliders[i], hand.Collider, ignore);
+            }
         }
 
         public virtual void HeldFixedUpdate(float step)
