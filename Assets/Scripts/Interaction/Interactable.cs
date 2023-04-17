@@ -30,6 +30,7 @@ namespace Hjelmqvist.VR
         public Collider[] Colliders => colliders;
 
         public virtual bool CanBeGrabbed(bool ranged) => holdingHand == null && (canBeRangedGrabbed || !ranged);
+        public bool IsGrabbed => holdingHand;
 
         protected virtual void Awake()
         {
