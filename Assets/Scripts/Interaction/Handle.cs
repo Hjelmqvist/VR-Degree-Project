@@ -9,10 +9,10 @@ public class Handle : Interactable
     [SerializeField] Rigidbody bodyToMove;
     [SerializeField] Collider[] collidersToIgnore;
 
-    HandController controller;
-    Rigidbody handRigidbody;
-    Transform handTransform;
-    Transform handInput;
+    protected HandController controller;
+    protected Rigidbody handRigidbody;
+    protected Transform handTransform;
+    protected Transform handInput;
 
     Quaternion startRotation;
 
@@ -21,6 +21,8 @@ public class Handle : Interactable
     const float BreakDotRotationThreshold = 0f;
     const float DragMultiplier = 0.05f;
     const float RotateMultiplier = 2;
+
+    public Transform HandInput => handInput;
 
     protected override void Awake()
     {
@@ -77,7 +79,7 @@ public class Handle : Interactable
         }
     }
 
-    private void MoveHandToHandle()
+    protected void MoveHandToHandle()
     {
         SteamVR_Skeleton_PoseSnapshot snapshot = skeletonPoser.GetBlendedPose(holdingHand.Skeleton);
 
@@ -93,7 +95,7 @@ public class Handle : Interactable
         handTransform.rotation = transform.rotation * Quaternion.Inverse(snapshot.rotation);
     }
 
-    private void ApplyForcesToMovingBody(float handDistance)
+    protected void ApplyForcesToMovingBody(float handDistance)
     {
         if (bodyToMove && handDistance > MoveDistanceThreshold)
         {
