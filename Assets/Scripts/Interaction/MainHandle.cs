@@ -37,11 +37,11 @@ public class MainHandle : Handle
 
         if (TwoHandedRotation)
         {
-            targetRotation = Quaternion.LookRotation(secondaryHandle.HandInput.position - holdingHand.Controller.Input.position);
+            targetRotation = Quaternion.LookRotation(secondaryHandle.HandInput.position - handInput.position);
         }
         else
         {
-            targetRotation = holdingHand.transform.rotation * snapshot.rotation;
+            targetRotation = handInput.rotation * snapshot.rotation;
         }
 
         rb.SetAngularVelocity(targetRotation, step);
