@@ -20,9 +20,12 @@ namespace Hjelmqvist.VR
         protected SteamVR_Skeleton_Poser skeletonPoser;
         MeshRenderer[] meshRenderers;
         bool isHighlighting = false;
+        bool isInteracting = false;
 
         public UnityEvent OnPickup;
         public UnityEvent OnDrop;
+        public UnityEvent OnStartInteract;
+        public UnityEvent OnStopInteract;
 
         const float PoseBlendTime = 0.1f;
         const float SkeletonBlendTime = 0f;
@@ -31,6 +34,7 @@ namespace Hjelmqvist.VR
 
         public virtual bool CanBeGrabbed(bool ranged) => holdingHand == null && (canBeRangedGrabbed || !ranged);
         public bool IsGrabbed => holdingHand;
+        public bool IsInteracting => isInteracting;
 
         protected virtual void Awake()
         {
@@ -88,7 +92,7 @@ namespace Hjelmqvist.VR
         public virtual void Pickup(Hand hand)
         {
             hand.Skeleton.BlendToPoser(skeletonPoser, PoseBlendTime);
-            IgnoreHandCollision(hand, true);
+            IgnoreCollision(hand.Collider, true);
             rb.useGravity = false;
             holdingHand = hand;
             OnPickup.Invoke();
@@ -97,17 +101,21 @@ namespace Hjelmqvist.VR
         public virtual void Drop(Hand hand)
         {
             hand.Skeleton.BlendToSkeleton(SkeletonBlendTime);
-            IgnoreHandCollision(hand, false);
+            IgnoreCollision(hand.Collider, false);
             rb.useGravity = true;
             holdingHand = null;
             OnDrop.Invoke();
+            if (isInteracting)
+            {
+                StopInteract();
+            }
         }
 
-        private void IgnoreHandCollision(Hand hand, bool ignore)
+        public void IgnoreCollision(Collider collider, bool ignore)
         {
             for (int i = 0; i < colliders.Length; i++)
             {
-                Physics.IgnoreCollision(colliders[i], hand.Collider, ignore);
+                Physics.IgnoreCollision(colliders[i], collider, ignore);
             }
         }
 
@@ -121,9 +129,16 @@ namespace Hjelmqvist.VR
             rb.SetAngularVelocity(targetRotation, step);
         }
 
-        public virtual void Interact()
+        public virtual void StartInteract()
         {
-            // Override to add functionality for things like firing guns.
+            isInteracting = true;
+            OnStartInteract.Invoke();
+        }
+
+        public virtual void StopInteract()
+        {
+            isInteracting = false;
+            OnStopInteract.Invoke();
         }
     }
 }

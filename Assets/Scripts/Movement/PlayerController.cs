@@ -1,6 +1,5 @@
 using UnityEngine;
 using Valve.VR;
-using Valve.VR.InteractionSystem;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -26,8 +25,8 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        ApplyGravity();
         Rotate();
+        ApplyGravity();
     }
 
     private void Move()
@@ -38,15 +37,15 @@ public class PlayerController : MonoBehaviour
         controller.Move(movement);
     }
 
-    private void ApplyGravity()
-    {
-        controller.Move(gravity * Time.deltaTime);
-    }
-
     private void Rotate()
     {
         Vector2 input = rotationAction.axis;
         Vector3 rotation = new Vector3(0, input.x) * rotationSpeed * Time.deltaTime;
         transform.Rotate(rotation);
+    }
+
+    private void ApplyGravity()
+    {
+        controller.Move(gravity * Time.deltaTime);
     }
 }

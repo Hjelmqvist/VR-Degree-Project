@@ -961,7 +961,7 @@ MonoBehaviour:
     needsReinit: 0
   interactLayers:
     serializedVersion: 2
-    m_Bits: 8576
+    m_Bits: 9600
   blockingLayers:
     serializedVersion: 2
     m_Bits: 257
@@ -1127,7 +1127,7 @@ MonoBehaviour:
   meshCollider: {fileID: 1961646431}
   blockingLayers:
     serializedVersion: 2
-    m_Bits: 1335
+    m_Bits: 257
   maxVelocity: 10
   IsControlling: 1
 --- !u!64 &1961646431
@@ -1208,7 +1208,7 @@ MonoBehaviour:
     needsReinit: 0
   interactLayers:
     serializedVersion: 2
-    m_Bits: 8576
+    m_Bits: 9600
   blockingLayers:
     serializedVersion: 2
     m_Bits: 257
@@ -1374,7 +1374,7 @@ MonoBehaviour:
   meshCollider: {fileID: 1927962894}
   blockingLayers:
     serializedVersion: 2
-    m_Bits: 1335
+    m_Bits: 257
   maxVelocity: 10
   IsControlling: 1
 --- !u!64 &1927962894

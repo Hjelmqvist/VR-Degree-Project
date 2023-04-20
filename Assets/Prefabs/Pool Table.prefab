@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2517686024179502390}
   - component: {fileID: 5036281732464279225}
   - component: {fileID: 663806295956763298}
+  - component: {fileID: 1237818332}
   m_Layer: 11
   m_Name: Ball.009
   m_TagString: Untagged
@@ -114,6 +115,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.034
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1237818332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64674875765760391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce749dc025df424aa812a63f821a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 2
+  isWhiteBall: 0
+  isEightBall: 0
 --- !u!1 &1128981051239582323
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,6 +143,7 @@ GameObject:
   - component: {fileID: 8801472573446557069}
   - component: {fileID: 8920696043131028863}
   - component: {fileID: 8779114791513509241}
+  - component: {fileID: 2097963221}
   m_Layer: 11
   m_Name: Ball.004
   m_TagString: Untagged
@@ -228,6 +245,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.034
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2097963221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128981051239582323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce749dc025df424aa812a63f821a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 1
+  isWhiteBall: 0
+  isEightBall: 0
 --- !u!1 &1603614919001129817
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,6 +273,7 @@ GameObject:
   - component: {fileID: 867529208800779610}
   - component: {fileID: 149854677320066800}
   - component: {fileID: 658810365705068056}
+  - component: {fileID: 376693964}
   m_Layer: 11
   m_Name: Ball.011
   m_TagString: Untagged
@@ -342,6 +375,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.034
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &376693964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603614919001129817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce749dc025df424aa812a63f821a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 2
+  isWhiteBall: 0
+  isEightBall: 0
 --- !u!1 &1971950512663332752
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,6 +403,7 @@ GameObject:
   - component: {fileID: 1128824786024156013}
   - component: {fileID: 1317771375172727723}
   - component: {fileID: 5287963951892291927}
+  - component: {fileID: 1323057257}
   m_Layer: 11
   m_Name: Ball.006
   m_TagString: Untagged
@@ -456,6 +505,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.034
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1323057257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971950512663332752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce749dc025df424aa812a63f821a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 1
+  isWhiteBall: 0
+  isEightBall: 0
 --- !u!1 &2688701408656483516
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,6 +533,7 @@ GameObject:
   - component: {fileID: 3053607954461793456}
   - component: {fileID: 7599106157152113101}
   - component: {fileID: 1891175941928677679}
+  - component: {fileID: 1001421643}
   m_Layer: 11
   m_Name: Ball.005
   m_TagString: Untagged
@@ -570,6 +635,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.034
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1001421643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2688701408656483516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce749dc025df424aa812a63f821a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 1
+  isWhiteBall: 0
+  isEightBall: 0
 --- !u!1 &2920303524771687906
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,6 +663,7 @@ GameObject:
   - component: {fileID: 8207089515000663571}
   - component: {fileID: 5222897793543055859}
   - component: {fileID: 1296571521736758689}
+  - component: {fileID: 1235291028}
   m_Layer: 11
   m_Name: Ball.013
   m_TagString: Untagged
@@ -684,6 +765,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.034
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1235291028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2920303524771687906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce749dc025df424aa812a63f821a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 2
+  isWhiteBall: 0
+  isEightBall: 0
 --- !u!1 &3590827235466972800
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,6 +793,7 @@ GameObject:
   - component: {fileID: 8464223054380558077}
   - component: {fileID: 8431866422897668727}
   - component: {fileID: 3044978330459084147}
+  - component: {fileID: 513193447}
   m_Layer: 11
   m_Name: Ball.007
   m_TagString: Untagged
@@ -798,6 +895,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.034
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &513193447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3590827235466972800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce749dc025df424aa812a63f821a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 1
+  isWhiteBall: 0
+  isEightBall: 0
 --- !u!1 &3681775474576678216
 GameObject:
   m_ObjectHideFlags: 0
@@ -1164,6 +1276,7 @@ GameObject:
   - component: {fileID: 4165907280695419957}
   - component: {fileID: 7124980132934525831}
   - component: {fileID: 395462669531036583}
+  - component: {fileID: 390739488}
   m_Layer: 11
   m_Name: Ball.008
   m_TagString: Untagged
@@ -1265,6 +1378,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.034
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &390739488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4210556589169513999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce749dc025df424aa812a63f821a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 0
+  isWhiteBall: 0
+  isEightBall: 1
 --- !u!1 &4715805831265596202
 GameObject:
   m_ObjectHideFlags: 0
@@ -1278,6 +1406,7 @@ GameObject:
   - component: {fileID: 264073364467888363}
   - component: {fileID: 3975104610434316244}
   - component: {fileID: 4597681580671888407}
+  - component: {fileID: 460369102}
   m_Layer: 11
   m_Name: Ball.014
   m_TagString: Untagged
@@ -1379,6 +1508,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.034
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &460369102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4715805831265596202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce749dc025df424aa812a63f821a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 2
+  isWhiteBall: 0
+  isEightBall: 0
 --- !u!1 &5985774593524256465
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,6 +1536,7 @@ GameObject:
   - component: {fileID: 2082264909986442641}
   - component: {fileID: 6183101704627549043}
   - component: {fileID: 1363208080806508050}
+  - component: {fileID: 1827397782}
   m_Layer: 11
   m_Name: Ball.015
   m_TagString: Untagged
@@ -1493,6 +1638,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.034
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1827397782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5985774593524256465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce749dc025df424aa812a63f821a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 2
+  isWhiteBall: 0
+  isEightBall: 0
 --- !u!1 &6398532214704837040
 GameObject:
   m_ObjectHideFlags: 0
@@ -1506,6 +1666,7 @@ GameObject:
   - component: {fileID: 4735369795556566513}
   - component: {fileID: 700275394530389227}
   - component: {fileID: 1871913209205828296}
+  - component: {fileID: 1444866872}
   m_Layer: 11
   m_Name: Ball.003
   m_TagString: Untagged
@@ -1607,6 +1768,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.034
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1444866872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6398532214704837040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce749dc025df424aa812a63f821a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 1
+  isWhiteBall: 0
+  isEightBall: 0
 --- !u!1 &7750934274129259385
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,6 +1796,7 @@ GameObject:
   - component: {fileID: 5235083153640304524}
   - component: {fileID: 3146048669940564600}
   - component: {fileID: 7746202590163202189}
+  - component: {fileID: 2053990096}
   m_Layer: 11
   m_Name: Ball.002
   m_TagString: Untagged
@@ -1721,6 +1898,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.034
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2053990096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7750934274129259385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce749dc025df424aa812a63f821a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 1
+  isWhiteBall: 0
+  isEightBall: 0
 --- !u!1 &7887146160401401821
 GameObject:
   m_ObjectHideFlags: 0
@@ -1820,6 +2012,7 @@ GameObject:
   - component: {fileID: 1370680828568446843}
   - component: {fileID: 3970397431984723364}
   - component: {fileID: 4465258477724355160}
+  - component: {fileID: 632254345}
   m_Layer: 11
   m_Name: Ball.012
   m_TagString: Untagged
@@ -1921,6 +2114,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.034
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &632254345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8125178941741635104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce749dc025df424aa812a63f821a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 2
+  isWhiteBall: 0
+  isEightBall: 0
 --- !u!1 &8307440871273014568
 GameObject:
   m_ObjectHideFlags: 0
@@ -1934,6 +2142,7 @@ GameObject:
   - component: {fileID: 5035651853713230298}
   - component: {fileID: 1950787055330879148}
   - component: {fileID: 4013320963529447408}
+  - component: {fileID: 1119830167}
   m_Layer: 11
   m_Name: Ball.001
   m_TagString: Untagged
@@ -2035,6 +2244,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.034
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1119830167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8307440871273014568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce749dc025df424aa812a63f821a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 1
+  isWhiteBall: 0
+  isEightBall: 0
 --- !u!1 &8372394392376054538
 GameObject:
   m_ObjectHideFlags: 0
@@ -2048,7 +2272,8 @@ GameObject:
   - component: {fileID: 5799798658338909413}
   - component: {fileID: 5616554906619809687}
   - component: {fileID: 1076739171189140413}
-  m_Layer: 12
+  - component: {fileID: 1554733591}
+  m_Layer: 11
   m_Name: BallWhite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2149,6 +2374,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.034
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1554733591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8372394392376054538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce749dc025df424aa812a63f821a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 0
+  isWhiteBall: 1
+  isEightBall: 0
 --- !u!1 &8894226359604145432
 GameObject:
   m_ObjectHideFlags: 0
@@ -2196,7 +2436,6 @@ Transform:
   - {fileID: 688615758722508300}
   - {fileID: 6615946041883102000}
   - {fileID: 3681775474941732251}
-  - {fileID: 1788892223622291465}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2242,6 +2481,7 @@ GameObject:
   - component: {fileID: 8386695393031756155}
   - component: {fileID: 4699534161396290149}
   - component: {fileID: 860461025866541009}
+  - component: {fileID: 142285874}
   m_Layer: 11
   m_Name: Ball.010
   m_TagString: Untagged
@@ -2343,78 +2583,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.034
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1001 &6538624808582485308
-PrefabInstance:
+--- !u!114 &142285874
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 8080992016339482530}
-    m_Modifications:
-    - target: {fileID: 4786965081473332533, guid: 4f7329f6da3d4e948bf26fae70b198d5,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 4786965081473332533, guid: 4f7329f6da3d4e948bf26fae70b198d5,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4786965081473332533, guid: 4f7329f6da3d4e948bf26fae70b198d5,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4786965081473332533, guid: 4f7329f6da3d4e948bf26fae70b198d5,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.39999962
-      objectReference: {fileID: 0}
-    - target: {fileID: 4786965081473332533, guid: 4f7329f6da3d4e948bf26fae70b198d5,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4786965081473332533, guid: 4f7329f6da3d4e948bf26fae70b198d5,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4786965081473332533, guid: 4f7329f6da3d4e948bf26fae70b198d5,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4786965081473332533, guid: 4f7329f6da3d4e948bf26fae70b198d5,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4786965081473332533, guid: 4f7329f6da3d4e948bf26fae70b198d5,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4786965081473332533, guid: 4f7329f6da3d4e948bf26fae70b198d5,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 4786965081473332533, guid: 4f7329f6da3d4e948bf26fae70b198d5,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8762392789853038771, guid: 4f7329f6da3d4e948bf26fae70b198d5,
-        type: 3}
-      propertyPath: m_Name
-      value: Pool Cue
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4f7329f6da3d4e948bf26fae70b198d5, type: 3}
---- !u!4 &1788892223622291465 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4786965081473332533, guid: 4f7329f6da3d4e948bf26fae70b198d5,
-    type: 3}
-  m_PrefabInstance: {fileID: 6538624808582485308}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9071604533819271761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce749dc025df424aa812a63f821a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 2
+  isWhiteBall: 0
+  isEightBall: 0

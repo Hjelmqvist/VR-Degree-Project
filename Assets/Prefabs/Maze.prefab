@@ -177,6 +177,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnStartInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStopInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  canBreakGrab: 1
   handOffset: {x: 0.603, y: 0.446, z: 0.131}
   bodyToMove: {fileID: 3930170016100977061}
   collidersToIgnore: []
@@ -2246,6 +2253,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnDrop:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStartInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStopInteract:
     m_PersistentCalls:
       m_Calls: []
   moveType: 1

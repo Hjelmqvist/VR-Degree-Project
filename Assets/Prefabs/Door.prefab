@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 7208668473714333847}
   - component: {fileID: 3060162920071251663}
   - component: {fileID: 7762513227254597927}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Handle 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,6 +344,13 @@ MonoBehaviour:
   OnDrop:
     m_PersistentCalls:
       m_Calls: []
+  OnStartInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStopInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  canBreakGrab: 1
   handOffset: {x: 0.603, y: 0.446, z: 0.131}
   bodyToMove: {fileID: 751802468}
   collidersToIgnore:
@@ -697,7 +704,7 @@ GameObject:
   - component: {fileID: 1227571897409201000}
   - component: {fileID: 5994532718432812122}
   - component: {fileID: 7225020390699076224}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Handle 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -846,6 +853,13 @@ MonoBehaviour:
   OnDrop:
     m_PersistentCalls:
       m_Calls: []
+  OnStartInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStopInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  canBreakGrab: 1
   handOffset: {x: 0.603, y: 0.446, z: 0.131}
   bodyToMove: {fileID: 751802468}
   collidersToIgnore:

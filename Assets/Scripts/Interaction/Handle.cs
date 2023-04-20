@@ -5,6 +5,7 @@ using Valve.VR;
 public class Handle : Interactable
 {
     [Header("Handle specific")]
+    [SerializeField] bool canBreakGrab = true;
     [SerializeField] Vector3 handOffset;
     [SerializeField] Rigidbody bodyToMove;
     [SerializeField] Collider[] collidersToIgnore;
@@ -65,17 +66,19 @@ public class Handle : Interactable
     public override void HeldFixedUpdate(float step)
     {
         MoveHandToHandle();
-
         float handDistance = Vector3.Distance(handTransform.position, handInput.position);
-
         ApplyForcesToMovingBody(handDistance);
 
         // Break hold if distance is too big or rotation is too different
-        if (handDistance > BreakDistanceThreshold ||
-            Vector3.Dot(handTransform.forward, handInput.forward) < BreakDotRotationThreshold)
+        if (canBreakGrab)
         {
-            holdingHand.DropInteractable();
-            return;
+            bool distanceBreak = handDistance > BreakDistanceThreshold;
+            bool rotationBreak = Vector3.Dot(handTransform.forward, handInput.forward) < BreakDotRotationThreshold;
+            if (distanceBreak || rotationBreak)
+            {
+                holdingHand.DropInteractable();
+                return;
+            }
         }
     }
 

@@ -1,11 +1,13 @@
 using UnityEngine;
 using Valve.VR;
+using Valve.VR.InteractionSystem;
 
 namespace Hjelmqvist.VR
 {
     [RequireComponent(typeof(HandController))]
     public class Hand : MonoBehaviour
     {
+        [SerializeField] Collider playerBody;
         [SerializeField] SteamVR_Input_Sources handType = SteamVR_Input_Sources.LeftHand;
         [SerializeField, Range(0, 1)] float grabStrengthThreshold = 0.1f;
         [SerializeField] SteamVR_Action_Single squeezeAction = SteamVR_Input.GetAction<SteamVR_Action_Single>("Squeeze");
@@ -60,20 +62,25 @@ namespace Hjelmqvist.VR
             wasGrabbing = isGrabbing;
             isGrabbing = squeezeAction.GetAxis(handType) > grabStrengthThreshold;
 
-            if (!isHolding) // Search for object
+            if (!isHolding) 
             {
+                // Search for object
                 TryPickupInteractable();
             }
             else
             {
-                if (interactAction.stateDown)
+                if (interactAction.GetStateDown(handType))
                 {
-                    heldInteractable.Interact();
+                    heldInteractable.StartInteract();
+                }
+                else if (interactAction.GetStateUp(handType))
+                {
+                    heldInteractable.StopInteract();
                 }
 
                 if (wasGrabbing && !isGrabbing)
                 {
-                    DropInteractable(); // Drop object
+                    DropInteractable();
                 }
             }
         }
@@ -102,6 +109,7 @@ namespace Hjelmqvist.VR
         {
             StopHover();
             interactable.Pickup(this);
+            interactable.IgnoreCollision(playerBody, true);
             heldInteractable = interactable;
             isHolding = true;
             holdStartTime = Time.time;
@@ -113,6 +121,7 @@ namespace Hjelmqvist.VR
             if (heldInteractable)
             {
                 heldInteractable.Drop(this);
+                heldInteractable.IgnoreCollision(playerBody, false);
                 heldInteractable = null;
                 isHolding = false;
             }
