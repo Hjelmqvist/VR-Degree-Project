@@ -1,7 +1,8 @@
+using Hjelmqvist.VR;
 using UnityEngine;
 using Valve.VR;
 
-public class PoolCue : MainHandle
+public class PoolCue : Interactable
 {
     public override void HeldFixedUpdate(float step)
     {

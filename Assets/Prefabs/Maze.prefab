@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7418c7dd8f977d4e969202d3fa7e926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poseEditorExpanded: 0
+  poseEditorExpanded: 1
   blendEditorExpanded: 1
   poseNames:
   - CubePose (MAIN)
@@ -158,7 +158,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeRangedGrabbed: 0
+  leftHandOffset: {x: -0.72399974, y: 0.53599954, z: 0.15800096}
+  rightHandOffset: {x: 0.72399974, y: 0.53599954, z: 0.15800096}
   hoverMaterial: {fileID: 2100000, guid: 7b939e5e799d98a469f594828ebab52e, type: 2}
+  secondaryHandle: {fileID: 0}
+  collidersToIgnore: []
   OnPickup:
     m_PersistentCalls:
       m_Calls: []
@@ -184,9 +188,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   canBreakGrab: 1
-  handOffset: {x: 0.603, y: 0.446, z: 0.131}
   bodyToMove: {fileID: 3930170016100977061}
-  collidersToIgnore: []
 --- !u!1 &3930170016067376743
 GameObject:
   m_ObjectHideFlags: 0
@@ -2248,7 +2250,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeRangedGrabbed: 1
+  leftHandOffset: {x: 0, y: 0, z: 0}
+  rightHandOffset: {x: 0, y: 0, z: 0}
   hoverMaterial: {fileID: 2100000, guid: 7b939e5e799d98a469f594828ebab52e, type: 2}
+  secondaryHandle: {fileID: 0}
+  collidersToIgnore: []
   OnPickup:
     m_PersistentCalls:
       m_Calls: []

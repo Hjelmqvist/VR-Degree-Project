@@ -20,7 +20,7 @@ public class PoolBall : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         startPosition = transform.position;
-        Restart();
+        ResetPosition();
     }
 
     private void Update()
@@ -28,12 +28,18 @@ public class PoolBall : MonoBehaviour
         isRolling = rb.velocity.magnitude <= 0.01f;
     }
 
-    public void Restart()
+    public void ResetPosition()
     {
         transform.position = startPosition;
         transform.rotation = Random.rotation;
-        rb.velocity = Vector3.zero;
         gameObject.SetActive(true);
+        rb.velocity = Vector3.zero;
+    }
+
+    public void Deactivate()
+    {
+        gameObject.SetActive(false);
+        rb.velocity = Vector3.zero;
     }
 
     public void Shoot(Vector3 direction, Vector3 position)

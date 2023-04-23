@@ -85,6 +85,15 @@ namespace Hjelmqvist.VR
             }
         }
 
+        private void LateUpdate()
+        {
+            if (isHolding)
+            {
+                float step = grabSpeed.Evaluate(Mathf.InverseLerp(holdStartTime, holdTargetTime, Time.time));
+                heldInteractable.HeldUpdate(step);
+            }
+        }
+
         private void FixedUpdate()
         {
             if (isHolding)
@@ -109,7 +118,7 @@ namespace Hjelmqvist.VR
         {
             StopHover();
             interactable.Pickup(this);
-            interactable.IgnoreCollision(playerBody, true);
+            interactable.IgnoreCollision(interactable.Colliders, playerBody, true);
             heldInteractable = interactable;
             isHolding = true;
             holdStartTime = Time.time;
@@ -121,7 +130,7 @@ namespace Hjelmqvist.VR
             if (heldInteractable)
             {
                 heldInteractable.Drop(this);
-                heldInteractable.IgnoreCollision(playerBody, false);
+                heldInteractable.IgnoreCollision(heldInteractable.Colliders, playerBody, false);
                 heldInteractable = null;
                 isHolding = false;
             }

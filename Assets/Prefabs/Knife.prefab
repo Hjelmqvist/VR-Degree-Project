@@ -174,11 +174,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeRangedGrabbed: 1
+  leftHandOffset: {x: 0.013400078, y: -0.026100464, z: 0.0750003}
+  rightHandOffset: {x: -0.013400078, y: -0.02610046, z: 0.0750003}
   hoverMaterial: {fileID: 2100000, guid: 7b939e5e799d98a469f594828ebab52e, type: 2}
+  secondaryHandle: {fileID: 0}
+  collidersToIgnore: []
   OnPickup:
     m_PersistentCalls:
       m_Calls: []
   OnDrop:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStartInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStopInteract:
     m_PersistentCalls:
       m_Calls: []
   moveType: 1

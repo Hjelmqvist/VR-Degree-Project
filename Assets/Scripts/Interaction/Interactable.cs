@@ -9,9 +9,12 @@ namespace Hjelmqvist.VR
     public class Interactable : MonoBehaviour
     {
         [SerializeField] protected bool canBeRangedGrabbed = true;
-
-        [Header("Highlight")]
+        [SerializeField] Vector3 leftHandOffset;
+        [SerializeField] Vector3 rightHandOffset;
         [SerializeField] protected Material hoverMaterial;
+        [SerializeField] protected Handle secondaryHandle;
+        [Tooltip("Colliders on parent objects that should be ignored.")]
+        [SerializeField] Collider[] collidersToIgnore;
         protected List<Hand> hoveringHands = new List<Hand>();
         protected Hand holdingHand;
 
@@ -22,6 +25,11 @@ namespace Hjelmqvist.VR
         bool isHighlighting = false;
         bool isInteracting = false;
 
+        protected HandController handController;
+        protected Rigidbody handRigidbody;
+        protected Transform handTransform;
+        protected Transform handInput;
+
         public UnityEvent OnPickup;
         public UnityEvent OnDrop;
         public UnityEvent OnStartInteract;
@@ -31,10 +39,11 @@ namespace Hjelmqvist.VR
         const float SkeletonBlendTime = 0f;
 
         public Collider[] Colliders => colliders;
-
+        
         public virtual bool CanBeGrabbed(bool ranged) => holdingHand == null && (canBeRangedGrabbed || !ranged);
         public bool IsGrabbed => holdingHand;
         public bool IsInteracting => isInteracting;
+        protected virtual bool IsUsingTwoHands => secondaryHandle && secondaryHandle.IsGrabbed;
 
         protected virtual void Awake()
         {
@@ -92,26 +101,39 @@ namespace Hjelmqvist.VR
         public virtual void Pickup(Hand hand)
         {
             hand.Skeleton.BlendToPoser(skeletonPoser, PoseBlendTime);
-            IgnoreCollision(hand.Collider, true);
+            IgnoreCollision(colliders, hand.Collider, true);
+            IgnoreCollision(collidersToIgnore, hand.Collider, true);
             rb.useGravity = false;
+
             holdingHand = hand;
+            handController = hand.Controller;
+            handController.IsControlling = false;
+            handRigidbody = handController.RB;
+            handTransform = hand.transform;
+            handInput = handController.Input;
+
             OnPickup.Invoke();
         }
 
         public virtual void Drop(Hand hand)
         {
             hand.Skeleton.BlendToSkeleton(SkeletonBlendTime);
-            IgnoreCollision(hand.Collider, false);
+            IgnoreCollision(colliders, hand.Collider, false);
+            IgnoreCollision(collidersToIgnore, hand.Collider, false);
             rb.useGravity = true;
+
             holdingHand = null;
-            OnDrop.Invoke();
+            handController.IsControlling = true;
+
             if (isInteracting)
             {
                 StopInteract();
             }
+
+            OnDrop.Invoke();
         }
 
-        public void IgnoreCollision(Collider collider, bool ignore)
+        public void IgnoreCollision(Collider[] colliders, Collider collider, bool ignore)
         {
             for (int i = 0; i < colliders.Length; i++)
             {
@@ -119,14 +141,48 @@ namespace Hjelmqvist.VR
             }
         }
 
+        public virtual void HeldUpdate(float step)
+        {
+            SteamVR_Skeleton_PoseSnapshot snapshot = skeletonPoser.GetBlendedPose(holdingHand.Skeleton);
+            MoveHand(snapshot);
+        }
+
         public virtual void HeldFixedUpdate(float step)
         {
             SteamVR_Skeleton_PoseSnapshot snapshot = skeletonPoser.GetBlendedPose(holdingHand.Skeleton);
-            Vector3 targetPosition = holdingHand.transform.TransformPoint(snapshot.position);
-            Quaternion targetRotation = holdingHand.transform.rotation * snapshot.rotation;
+            Move(snapshot, step);
+            Rotate(snapshot, step);  
+        }
 
+        protected virtual void Move(SteamVR_Skeleton_PoseSnapshot snapshot, float step)
+        {
+            Vector3 targetPosition = handInput.TransformPoint(snapshot.position);
             rb.SetVelocity(targetPosition, step);
+        }
+
+        protected virtual void Rotate(SteamVR_Skeleton_PoseSnapshot snapshot, float step)
+        {
+            Quaternion targetRotation;
+
+            if (IsUsingTwoHands)
+            {
+                targetRotation = Quaternion.LookRotation(secondaryHandle.HandInput.position - handInput.position);
+            }
+            else
+            {
+                targetRotation = handInput.rotation * snapshot.rotation;
+            }
+
             rb.SetAngularVelocity(targetRotation, step);
+        }
+
+        protected void MoveHand(SteamVR_Skeleton_PoseSnapshot snapshot)
+        {
+            Vector3 offset = holdingHand.HandType == SteamVR_Input_Sources.LeftHand ? leftHandOffset : rightHandOffset;
+            handRigidbody.velocity = Vector3.zero;
+            handRigidbody.angularVelocity = Vector3.zero;
+            handTransform.position = transform.TransformPoint(offset);
+            handTransform.rotation = transform.rotation * Quaternion.Inverse(snapshot.rotation);
         }
 
         public virtual void StartInteract()

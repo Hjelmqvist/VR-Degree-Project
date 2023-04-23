@@ -337,7 +337,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeRangedGrabbed: 0
+  leftHandOffset: {x: -0.6033341, y: 0.4466663, z: 0.13166691}
+  rightHandOffset: {x: 0.6033341, y: 0.4466663, z: 0.13166691}
   hoverMaterial: {fileID: 2100000, guid: 7b939e5e799d98a469f594828ebab52e, type: 2}
+  secondaryHandle: {fileID: 0}
+  collidersToIgnore:
+  - {fileID: 2064111162269912566}
+  - {fileID: 751802473}
   OnPickup:
     m_PersistentCalls:
       m_Calls: []
@@ -351,11 +357,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   canBreakGrab: 1
-  handOffset: {x: 0.603, y: 0.446, z: 0.131}
   bodyToMove: {fileID: 751802468}
-  collidersToIgnore:
-  - {fileID: 2064111162269912566}
-  - {fileID: 751802473}
 --- !u!1 &7486176141814344100
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,7 +848,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeRangedGrabbed: 0
+  leftHandOffset: {x: -0.6033341, y: 0.4466663, z: 0.13166691}
+  rightHandOffset: {x: 0.6033341, y: 0.4466663, z: 0.13166691}
   hoverMaterial: {fileID: 2100000, guid: 7b939e5e799d98a469f594828ebab52e, type: 2}
+  secondaryHandle: {fileID: 0}
+  collidersToIgnore:
+  - {fileID: 2064111162269912566}
+  - {fileID: 751802473}
   OnPickup:
     m_PersistentCalls:
       m_Calls: []
@@ -860,11 +868,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   canBreakGrab: 1
-  handOffset: {x: 0.603, y: 0.446, z: 0.131}
   bodyToMove: {fileID: 751802468}
-  collidersToIgnore:
-  - {fileID: 2064111162269912566}
-  - {fileID: 751802473}
 --- !u!1001 &359586184
 PrefabInstance:
   m_ObjectHideFlags: 0
