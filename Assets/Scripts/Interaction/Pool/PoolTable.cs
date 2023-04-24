@@ -6,6 +6,7 @@ public class PoolTable : MonoBehaviour
 {
     [SerializeField] TextMeshPro text;
     [SerializeField] PoolBall[] balls;
+    [SerializeField] PoolCue[] cues;
     [SerializeField] float whiteBallRespawnDelay = 1f;
 
     public enum Team
@@ -35,11 +36,18 @@ public class PoolTable : MonoBehaviour
         }
     }
 
+    public void ResetCues()
+    {
+        for (int i = 0; i < cues.Length; i++)
+        {
+            cues[i].ResetPosition();
+        }
+    }
+
     public bool IsReadyToShoot()
     {
         if (gameIsOver)
         {
-            Debug.Log("Game over");
             return false;
         }
 
@@ -47,7 +55,6 @@ public class PoolTable : MonoBehaviour
         {
             if (balls[i].IsRolling)
             {
-                Debug.Log(balls[i] + " is rolling");
                 return false;
             }
         }
@@ -61,7 +68,7 @@ public class PoolTable : MonoBehaviour
             case Team.None:
                 if (ball.IsWhiteBall)
                 {
-                    WantAndRespawnWhiteBall(ball);
+                    WaitAndRespawnWhiteBall(ball);
                 }
                 else if (ball.IsEightBall)
                 {
@@ -87,7 +94,7 @@ public class PoolTable : MonoBehaviour
         }
     }
 
-    private void WantAndRespawnWhiteBall(PoolBall ball)
+    private void WaitAndRespawnWhiteBall(PoolBall ball)
     {
         StartCoroutine(WhiteBallRespawn());
 
