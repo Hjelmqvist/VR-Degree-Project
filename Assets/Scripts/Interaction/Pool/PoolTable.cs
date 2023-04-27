@@ -109,6 +109,6 @@ public class PoolTable : MonoBehaviour
     private void Win(Team winningTeam)
     {
         gameIsOver = true;
-        text.text = $"{winningTeam} won!";
+        //text.text = $"{winningTeam} won!";
     }
 }

@@ -9,14 +9,34 @@ public class ConfigurableJointMethods : MonoBehaviour
     {
         joint = GetComponent<ConfigurableJoint>();
     }
-    
+
+    public void LockXMotion()
+    {
+        joint.xMotion = ConfigurableJointMotion.Locked;
+    }
+
+    public void LimitXMotion()
+    {
+        joint.xMotion = ConfigurableJointMotion.Limited;
+    }
+
+    public void LockYMotion()
+    {
+        joint.yMotion = ConfigurableJointMotion.Locked;
+    }
+
+    public void LimitYMotion()
+    {
+        joint.yMotion = ConfigurableJointMotion.Limited;
+    }
+
     public void LockZMotion()
     {
         joint.zMotion = ConfigurableJointMotion.Locked;
     }
 
-    public void UnlockZMotions()
+    public void LimitZMotion()
     {
-        joint.zMotion = ConfigurableJointMotion.Free;
+        joint.zMotion = ConfigurableJointMotion.Limited;
     }
 }

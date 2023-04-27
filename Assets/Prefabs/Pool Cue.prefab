@@ -539,7 +539,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -588,6 +588,7 @@ MonoBehaviour:
   canBeRangedGrabbed: 1
   leftHandOffset: {x: 0.03569961, y: -0.28110445, z: 1.1324525}
   rightHandOffset: {x: -0.035692457, y: -0.28110445, z: 1.1324525}
+  rotationEulerOffset: {x: 0, y: 0, z: 0}
   hoverMaterial: {fileID: 2100000, guid: 7b939e5e799d98a469f594828ebab52e, type: 2}
   secondaryHandle: {fileID: 0}
   collidersToIgnore:
@@ -597,7 +598,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2102226390}
         m_TargetAssemblyTypeName: ConfigurableJointMethods, Assembly-CSharp
-        m_MethodName: UnlockZMotions
+        m_MethodName: LimitZMotion
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -653,7 +654,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   canBreakGrab: 0
-  bodyToMove: {fileID: 5138636796492966019}
+  bodyToMove: {fileID: 0}
 --- !u!153 &352271139809773882
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -926,85 +927,38 @@ MonoBehaviour:
   canBeRangedGrabbed: 1
   leftHandOffset: {x: 0.003569976, y: -0.028110445, z: 0.113244876}
   rightHandOffset: {x: -0.003569201, y: -0.028110445, z: 0.113244876}
+  rotationEulerOffset: {x: 0, y: 0, z: 0}
   hoverMaterial: {fileID: 2100000, guid: 7b939e5e799d98a469f594828ebab52e, type: 2}
   secondaryHandle: {fileID: 5138636796492966017}
   collidersToIgnore: []
   OnPickup:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5138636796492966023}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 2879425654191182541}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
   OnDrop:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5138636796492966023}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2879425654191182541}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnStartInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5138636796411990556}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 5138636796492966019}
+        m_TargetAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
+        m_MethodName: Sleep
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
   OnStopInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5138636796411990556}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 5138636796492966019}
+        m_TargetAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
+        m_MethodName: WakeUp
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1013,3 +967,5 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  poolLine: {fileID: 1660971625861918606}
+  cueTip: {fileID: 3184202349528724003}

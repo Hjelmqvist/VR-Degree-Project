@@ -11,6 +11,7 @@ namespace Hjelmqvist.VR
         [SerializeField] protected bool canBeRangedGrabbed = true;
         [SerializeField] Vector3 leftHandOffset;
         [SerializeField] Vector3 rightHandOffset;
+        [SerializeField] Vector3 rotationEulerOffset;
         [SerializeField] protected Material hoverMaterial;
         [SerializeField] protected Handle secondaryHandle;
         [Tooltip("Colliders on parent objects that should be ignored.")]
@@ -166,7 +167,7 @@ namespace Hjelmqvist.VR
 
             if (IsUsingTwoHands)
             {
-                targetRotation = Quaternion.LookRotation(secondaryHandle.HandInput.position - handInput.position);
+                targetRotation = Quaternion.LookRotation(secondaryHandle.HandInput.position - handInput.position) * Quaternion.Euler(rotationEulerOffset);
             }
             else
             {
