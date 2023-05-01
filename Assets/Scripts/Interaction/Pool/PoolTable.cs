@@ -1,24 +1,31 @@
 using UnityEngine;
 using TMPro;
-using System.Collections;
 using System.Collections.Generic;
 
 public class PoolTable : MonoBehaviour
 {
-    [SerializeField] TextMeshPro text;
     [SerializeField] PoolBall[] balls;
     [SerializeField] PoolCue[] cues;
     [SerializeField] float whiteBallRespawnDelay = 1f;
-    
+    [SerializeField] TextMeshPro winnerText;
+    [SerializeField] TextMeshPro stripesText;
+    [SerializeField] TextMeshPro solidsText;
 
     public enum Team
     {
         None,
         Stripes,
-        Solids
+        Solids,
+        EightBall
     }
 
     Dictionary<Team, int> teamScores = new Dictionary<Team, int>()
+    {
+        {Team.Stripes, 0},
+        {Team.Solids, 0}
+    };
+
+    Dictionary<Team, int> turnScores = new Dictionary<Team, int>()
     {
         {Team.Stripes, 0},
         {Team.Solids, 0}
@@ -30,12 +37,13 @@ public class PoolTable : MonoBehaviour
     bool gameIsOver = false;
 
     const int BallsBeforeBlackBall = 7;
+    const int WhiteBallIndex = 0;
 
     private void Update()
     {
         if (shotWhiteBall && IsReadyToShoot())
         {
-            
+            NextTurn();
         }
     }
 
@@ -45,6 +53,10 @@ public class PoolTable : MonoBehaviour
         gameIsOver = true;
         teamScores[Team.Stripes] = 0;
         teamScores[Team.Solids] = 0;
+        turnScores[Team.Stripes] = 0;
+        turnScores[Team.Solids] = 0;
+        UpdateScoreText();
+        winnerText.gameObject.SetActive(false);
 
         for (int i = 0; i < balls.Length; i++)
         {
@@ -77,77 +89,88 @@ public class PoolTable : MonoBehaviour
         return true;
     }
 
+    public void WhiteBallShot()
+    {
+        shotWhiteBall = true;
+    }
+
     private void NextTurn()
     {
+        shotWhiteBall = false;
+
+        if (currentShooter != Team.None && turnScores[currentShooter] > 0)
+        {
+
+        }
+
         // Change to the other team
         if (currentShooter != Team.None)
         {
             currentShooter = currentShooter == Team.Stripes ? Team.Solids : Team.Stripes;
         }
 
-        // Reset white ball
-        if (!balls[0].gameObject.activeInHierarchy)
+        if (!balls[WhiteBallIndex].gameObject.activeInHierarchy)
         {
-            balls[0].ResetPosition();
+            balls[WhiteBallIndex].ResetPosition();
         }
+
+        turnScores[Team.Stripes] = 0;
+        turnScores[Team.Solids] = 0;
     }
 
     public void BallDown(PoolBall ball)
     {
         switch (ball.Team)
         {
-            case Team.None:
-                if (ball.IsWhiteBall)
-                {
-                    WhiteBallDown(ball);
-                }
-                else if (ball.IsEightBall)
-                {
-                    EightBallDown(ball);
-                }
-                break;
-
             case Team.Stripes:
             case Team.Solids:
+                if (currentShooter == Team.None)
+                {
+                    currentShooter = ball.Team;
+                }
                 teamScores[ball.Team]++;
+                turnScores[ball.Team]++;
+                UpdateScoreText();
+                break;
+
+            case Team.EightBall:
+                EightBallDown(ball);
                 break;
         }
     }
 
-    private void WhiteBallDown(PoolBall ball)
+    private void UpdateScoreText()
     {
-        StartCoroutine(WhiteBallRespawn());
-
-        IEnumerator WhiteBallRespawn()
-        {
-            yield return new WaitUntil(() => IsReadyToShoot());
-            yield return new WaitForSeconds(whiteBallRespawnDelay);
-            ball.ResetPosition();
-        }
+        stripesText.text = teamScores[Team.Stripes].ToString();
+        solidsText.text = teamScores[Team.Solids].ToString();
     }
 
     private void EightBallDown(PoolBall ball)
     {
         Team winningTeam = Team.None;
 
-        // Win if last ball
-        if (currentShooter != Team.None && teamScores[currentShooter] == BallsBeforeBlackBall)
+        if (currentShooter == Team.None || teamScores[currentShooter] == BallsBeforeBlackBall)
         {
-            Win(currentShooter);
+            EndGame(currentShooter);
         }
-        else // Other team wins if eight ball went down before all team balls
+        else
         {
-            if (currentShooter != Team.None)
-            {
-                winningTeam = currentShooter == Team.Stripes ? Team.Solids : Team.Stripes;
-            }
-            Win(winningTeam);
+            winningTeam = currentShooter == Team.Stripes ? Team.Solids : Team.Stripes;
+            EndGame(winningTeam);
         }
     }
 
-    private void Win(Team winningTeam)
+    private void EndGame(Team winningTeam)
     {
-        gameIsOver = true;
-        //text.text = $"{winningTeam} won!";
+        if (winningTeam == Team.None)
+        {
+            ResetGame();
+        }
+        else
+        {
+            gameIsOver = true;
+            winnerText.text = $"{winningTeam} won!";
+            winnerText.gameObject.SetActive(true);
+        }
     }
 }

@@ -12,10 +12,10 @@ public class PoolLine : MonoBehaviour
     private void Update()
     {
         if (Physics.Raycast(cueTip.position, cueTip.forward, out RaycastHit hit, distance) &&
-            hit.transform.TryGetComponent(out PoolBall ball) && ball.IsWhiteBall)
+            hit.transform.TryGetComponent(out PoolWhiteBall ball))
         {
             lineToBall.SetPosition(0, hit.point);
-            lineToBall.SetPosition(1, hit.point + hit.normal * lineToBallDistance);
+            lineToBall.SetPosition(1, transform.position);
 
             Vector3 direction = ball.transform.position - hit.point;
             float length = direction.magnitude;

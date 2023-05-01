@@ -4,15 +4,11 @@ using UnityEngine;
 public class PoolBall : MonoBehaviour
 {
     [SerializeField] PoolTable.Team team;
-    [SerializeField] bool isWhiteBall = false;
-    [SerializeField] bool isEightBall = false;
 
-    Rigidbody rb;
+    protected Rigidbody rb;
     Vector3 startPosition;
 
     public bool IsRolling => rb.velocity.magnitude >= 0.01f;
-    public bool IsWhiteBall => isWhiteBall;
-    public bool IsEightBall => isEightBall;
     public PoolTable.Team Team => team;
 
     private void Awake()
@@ -35,10 +31,5 @@ public class PoolBall : MonoBehaviour
     {
         rb.velocity = Vector3.zero;
         gameObject.SetActive(false);
-    }
-
-    public void Shoot(Vector3 direction, Vector3 position)
-    {
-        rb.AddForceAtPosition(direction, position, ForceMode.Impulse);
     }
 }
