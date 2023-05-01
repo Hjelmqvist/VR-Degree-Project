@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PoolTable : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PoolTable : MonoBehaviour
     [SerializeField] PoolBall[] balls;
     [SerializeField] PoolCue[] cues;
     [SerializeField] float whiteBallRespawnDelay = 1f;
+    
 
     public enum Team
     {
@@ -16,19 +18,33 @@ public class PoolTable : MonoBehaviour
         Solids
     }
 
+    Dictionary<Team, int> teamScores = new Dictionary<Team, int>()
+    {
+        {Team.Stripes, 0},
+        {Team.Solids, 0}
+    };
+
     Team currentShooter = Team.None;
-    int stripesDown = 0;
-    int solidsDown = 0;
+
+    bool shotWhiteBall = false;
     bool gameIsOver = false;
 
     const int BallsBeforeBlackBall = 7;
 
+    private void Update()
+    {
+        if (shotWhiteBall && IsReadyToShoot())
+        {
+            
+        }
+    }
+
     public void ResetGame()
     {
         currentShooter = Team.None;
-        stripesDown = 0;
-        solidsDown = 0;
         gameIsOver = true;
+        teamScores[Team.Stripes] = 0;
+        teamScores[Team.Solids] = 0;
 
         for (int i = 0; i < balls.Length; i++)
         {
@@ -61,6 +77,21 @@ public class PoolTable : MonoBehaviour
         return true;
     }
 
+    private void NextTurn()
+    {
+        // Change to the other team
+        if (currentShooter != Team.None)
+        {
+            currentShooter = currentShooter == Team.Stripes ? Team.Solids : Team.Stripes;
+        }
+
+        // Reset white ball
+        if (!balls[0].gameObject.activeInHierarchy)
+        {
+            balls[0].ResetPosition();
+        }
+    }
+
     public void BallDown(PoolBall ball)
     {
         switch (ball.Team)
@@ -68,33 +99,22 @@ public class PoolTable : MonoBehaviour
             case Team.None:
                 if (ball.IsWhiteBall)
                 {
-                    WaitAndRespawnWhiteBall(ball);
+                    WhiteBallDown(ball);
                 }
                 else if (ball.IsEightBall)
                 {
-                    if ((currentShooter == Team.Stripes && stripesDown == BallsBeforeBlackBall) || 
-                        (currentShooter == Team.Solids && solidsDown == BallsBeforeBlackBall))
-                    {
-                        Win(currentShooter);
-                    }
-                    else
-                    {
-                        Win(currentShooter == Team.Stripes ? Team.Solids : Team.Stripes);
-                    }    
+                    EightBallDown(ball);
                 }
                 break;
 
             case Team.Stripes:
-                stripesDown++;
-                break;
-
             case Team.Solids:
-                solidsDown++;
+                teamScores[ball.Team]++;
                 break;
         }
     }
 
-    private void WaitAndRespawnWhiteBall(PoolBall ball)
+    private void WhiteBallDown(PoolBall ball)
     {
         StartCoroutine(WhiteBallRespawn());
 
@@ -103,6 +123,25 @@ public class PoolTable : MonoBehaviour
             yield return new WaitUntil(() => IsReadyToShoot());
             yield return new WaitForSeconds(whiteBallRespawnDelay);
             ball.ResetPosition();
+        }
+    }
+
+    private void EightBallDown(PoolBall ball)
+    {
+        Team winningTeam = Team.None;
+
+        // Win if last ball
+        if (currentShooter != Team.None && teamScores[currentShooter] == BallsBeforeBlackBall)
+        {
+            Win(currentShooter);
+        }
+        else // Other team wins if eight ball went down before all team balls
+        {
+            if (currentShooter != Team.None)
+            {
+                winningTeam = currentShooter == Team.Stripes ? Team.Solids : Team.Stripes;
+            }
+            Win(winningTeam);
         }
     }
 

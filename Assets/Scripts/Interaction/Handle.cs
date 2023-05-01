@@ -15,6 +15,7 @@ public class Handle : Interactable
     const float DragMultiplier = 0.05f;
     const float RotateMultiplier = 2;
 
+    public bool ApplyForces = true;
     public Transform HandInput => handInput;
 
     protected override void Awake()
@@ -58,7 +59,7 @@ public class Handle : Interactable
 
     protected void ApplyForcesToMovingBody(float handDistance)
     {
-        if (bodyToMove && handDistance > MoveDistanceThreshold)
+        if (bodyToMove && ApplyForces && handDistance > MoveDistanceThreshold)
         {
             Vector3 direction = handInput.position - handTransform.position;
             Vector3 targetVelocity = direction / Time.fixedDeltaTime * DragMultiplier;

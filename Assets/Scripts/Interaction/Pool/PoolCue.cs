@@ -6,6 +6,7 @@ public class PoolCue : Interactable
 {
     [SerializeField] PoolLine poolLine;
     [SerializeField] PoolCueTip cueTip;
+    [SerializeField] Rigidbody secondaryHandleRB;
     Vector3 startPosition;
 
     protected override void Awake()
@@ -34,12 +35,28 @@ public class PoolCue : Interactable
         secondaryHandle.gameObject.SetActive(false);
         poolLine.gameObject.SetActive(false);
         rb.freezeRotation = false;
+        secondaryHandle.ApplyForces = true;
     }
 
     public override void HeldFixedUpdate(float step)
     {
         base.HeldFixedUpdate(step);
-        rb.freezeRotation = IsInteracting || secondaryHandle.IsInteracting;
+
+        bool interacting = IsInteracting || secondaryHandle.IsInteracting;
+        rb.freezeRotation = interacting;
+
+        bool sleeping = secondaryHandleRB.IsSleeping();
+
+        if (IsInteracting && !sleeping)
+        {
+            secondaryHandleRB.Sleep();
+        }
+        else if (!IsInteracting && sleeping)
+        {
+            secondaryHandleRB.WakeUp();
+        }
+
+        secondaryHandle.ApplyForces = !interacting;
     }
 
     protected override void Move(SteamVR_Skeleton_PoseSnapshot snapshot, float step)
@@ -51,7 +68,6 @@ public class PoolCue : Interactable
             Vector3 direction = handInput.TransformPoint(snapshot.position) - transform.position;
             Vector3 localDirection = transform.InverseTransformDirection(direction);
             targetPosition = transform.position + transform.forward * localDirection.z;
-            Debug.Log($"Current Position: {transform.position}, Target: {targetPosition}, Direction: {direction}");
         }
         else
         {

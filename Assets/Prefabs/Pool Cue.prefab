@@ -625,36 +625,13 @@ MonoBehaviour:
         m_CallState: 2
   OnStartInteract:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5138636796492966019}
-        m_TargetAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-        m_MethodName: Sleep
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnStopInteract:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5138636796492966019}
-        m_TargetAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-        m_MethodName: WakeUp
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   canBreakGrab: 0
-  bodyToMove: {fileID: 0}
+  bodyToMove: {fileID: 5138636796492966019}
+  ApplyForces: 1
 --- !u!153 &352271139809773882
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -939,33 +916,10 @@ MonoBehaviour:
       m_Calls: []
   OnStartInteract:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5138636796492966019}
-        m_TargetAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-        m_MethodName: Sleep
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnStopInteract:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5138636796492966019}
-        m_TargetAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-        m_MethodName: WakeUp
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   poolLine: {fileID: 1660971625861918606}
   cueTip: {fileID: 3184202349528724003}
+  secondaryHandleRB: {fileID: 5138636796492966019}
